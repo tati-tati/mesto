@@ -8,21 +8,40 @@
   <link rel="stylesheet" href="./pages/index.css">
 </head>
 
-<body>
+<body class="page">
 <!--header-->
   <header class="header">
-
+    <img class="header__logo" src="./images/mesto-logo.svg" alt="логотип место">
   </header>
 
 <!--main-->
-  <main class="content">
+  <main class="content"> <!--пустой класс-->
+<!--profile-->
+    <section class="profile">
+      <img class="profile__avatar" src="./images/user_photo_jeremiah-del-mar.jpg" alt="аватар">
+      <h1 class="profile__name">Тати Прохорова</h1>
+      <p class="profile__description">подающая надежды студентка</p>
+      <button class="profile__edit-button"></button>
+      <button class="profile__add-button">+</button>
+    </section>
+<!--elements-->
+    <section class="elements" aria-label="Галерея">
+      <div class="elements__element">
+        <img class="elements__image" src="./images/kamchatka_ars-gadz.jpg" alt="фото Камчатка">
+        <h2 class="elements__title">Камчатка</h2>
+        <button class="elements__like-button"></button>
+      </div>
+      <!--карточки-->
 
+
+    </section>
   </main>
 
 <!--footer-->
   <footer class="footer">
-
+    <p class="footer__copyright">© 2022 Mesto Russia</p>
   </footer>
 
+<script src="./scripts/index.js"></script>
 </body>
 </html>
