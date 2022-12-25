@@ -3,4 +3,15 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
+  grid-area: text;
+  margin: 0;
+  align-self: flex-start;
 }
+
+@media screen and (max-width: 767px) {
+  .profile__description {
+    align-self: flex-end;
+  }
+}
+
+

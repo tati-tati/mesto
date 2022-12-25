@@ -1,3 +1,7 @@
 .elements__like-button {
-    
+  background: no-repeat center url(../../../images/button-like.svg);
+  width: 150px;
+  height: 50px;
+  justify-self: flex-end;
+  border: 0;
 }
