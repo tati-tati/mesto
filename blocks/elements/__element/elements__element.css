@@ -4,6 +4,7 @@
   background-color: #fff;
   color: #000;
   border-radius: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   overflow: hidden;
-  box-sizing: border-box;
 }

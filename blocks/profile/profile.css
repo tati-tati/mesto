@@ -12,7 +12,7 @@
 
 @media screen and (max-width: 767px) {
   .profile {
-    padding: 42px 19px 36px;
+    padding: 0 19px 36px;
     grid-template-areas:
     "pic pic"
     "name edit"
@@ -20,7 +20,7 @@
     "add add";
     justify-items: center;
     align-items: flex-end;
-    grid-template-columns: calc(100% - 37px) 37px;
-    grid-template-rows: 162px 48px 28px 86px;
+    grid-template-columns: 1fr .2fr;
+    grid-template-rows: 162px 56px 30px 80px;
   }
 }

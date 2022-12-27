@@ -1,7 +1,17 @@
 .elements__like-button {
   background: no-repeat center url(../../../images/button-like.svg);
-  width: 150px;
-  height: 50px;
-  justify-self: flex-end;
+  width: 22px;
+  height: 19px;
+  padding: 0;
+  cursor: pointer;
   border: 0;
+  position: relative;
+  left: 240px;
+  bottom: 62px;
 }
+
+.elements__like-button:active {
+  background: no-repeat center url(../../../images/button-like-active.svg);
+  opacity: 1;
+}
+
