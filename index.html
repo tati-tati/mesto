@@ -65,14 +65,14 @@
     <p class="footer__copyright">© 2022 Mesto Russia</p>
   </footer>
 
-  <div class="popup popup_opened">
+  <div class="popup">
     <div class="popup__container">
-      <button class="popup__close-button"></button>
-      <h2 class="popup__title">Редактировать профиль</h2>
+      <button class="popup__close-button button"></button>
+      <h2 class="popup__title">Редактировать&nbsp;профиль</h2>
       <form class="popup__form" action="#">
-        <input class="popup__input" type="text" placeholder="Имя">
-        <input class="popup__input" type="text" placeholder="Описание профиля">
-        <button class="popup__save-button">Сохранить</button>
+        <input class="popup__input popup__input_edit_name" type="text" name="name" placeholder="Тати Прохорова">
+        <input class="popup__input popup__input_edit_job" type="text" name="description" placeholder="собрала эту красоту">
+        <button class="popup__save-button" type="submit">Сохранить</button>
       </form>
     </div>
   </div>
