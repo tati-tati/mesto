@@ -4,12 +4,6 @@
   width: 24px;
   height: 24px;
   grid-area: edit;
-  position: relative;
-  top: 10px;
-}
-
-.profile__edit-button:hover {
-  opacity: .5;
 }
 
 @media screen and (max-width: 767px) {
