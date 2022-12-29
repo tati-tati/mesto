@@ -21,42 +21,42 @@
       <img class="profile__avatar" src="./images/avatar_jeremiah-del-mar-6wEM5ZJWVDQ-unsplash.jpg" alt="аватар">
       <h1 class="profile__name">Тати Прохорова</h1>
       <p class="profile__description">собрала эту красоту</p>
-      <button class="profile__edit-button button" type="button"></button>
-      <button class="profile__add-button button" type="button"></button>
+      <button class="profile__edit-button button" type="button" aria-label="Редактировать профиль"></button>
+      <button class="profile__add-button button" type="button" aria-label="Добавть фото"></button>
     </section>
 <!--elements-->
     <section class="elements" aria-label="Галерея">
-      <div class="elements__element">
+      <article class="elements__element">
         <img class="elements__image" src="./images/Kamchatka.jpg" alt="фото Камчатка">
         <h2 class="elements__title">Камчатка</h2>
-        <button class="elements__like-button button" type="button"></button>
-      </div>
+        <button class="elements__like-button button" type="button" aria-label="Поставить лайк"></button>
+      </article>
       <!--карточки-->
-      <div class="elements__element">
+      <article class="elements__element">
         <img class="elements__image" src="./images/Altai-Republic.jpg" alt="фото Алтай">
         <h2 class="elements__title">Алтай</h2>
-        <button class="elements__like-button button" type="button"></button>
-      </div>
-      <div class="elements__element">
+        <button class="elements__like-button button" type="button" aria-label="Поставить лайк"></button>
+      </article>
+      <article class="elements__element">
         <img class="elements__image" src="./images/cape-ptichiy-Sakhalin.jpg" alt="фото мыс Птичий">
         <h2 class="elements__title">Мыс Птичий</h2>
-        <button class="elements__like-button button" type="button"></button>
-      </div>
-      <div class="elements__element">
+        <button class="elements__like-button button" type="button" aria-label="Поставить лайк"></button>
+      </article>
+      <article class="elements__element">
         <img class="elements__image" src="./images/Gamsutl'-Dagestan.jpg" alt="фото Гамсутль">
         <h2 class="elements__title">Гамсутль</h2>
-        <button class="elements__like-button" type="button"></button>
-      </div>
-      <div class="elements__element">
+        <button class="elements__like-button button" type="button" aria-label="Поставить лайк"></button>
+      </article>
+      <article class="elements__element">
         <img class="elements__image" src="./images/Observation-tower-Akhun-Sochi.jpg" alt="фото смотровая площадка на Ахуне">
         <h2 class="elements__title">Ахун</h2>
-        <button class="elements__like-button button" type="button"></button>
-      </div>
-      <div class="elements__element">
+        <button class="elements__like-button button" type="button" aria-label="Поставить лайк"></button>
+      </article>
+      <article class="elements__element">
         <img class="elements__image" src="./images/Teriberka-Murmansk-obl.jpg" alt="фото Териберка">
         <h2 class="elements__title">Териберка</h2>
-        <button class="elements__like-button button" type="button"></button>
-      </div>
+        <button class="elements__like-button button" type="button" aria-label="Поставить лайк"></button>
+      </article>
     </section>
   </main>
 
@@ -65,14 +65,15 @@
     <p class="footer__copyright">© 2022 Mesto Russia</p>
   </footer>
 
+<!--popup-->
   <div class="popup">
     <div class="popup__container">
-      <button class="popup__close-button button"></button>
+      <button class="popup__close-button button" aria-label="Закрыть редактор профиля"></button>
       <h2 class="popup__title">Редактировать&nbsp;профиль</h2>
-      <form class="popup__form" action="#">
-        <input class="popup__input popup__input_edit_name" type="text" name="name" placeholder="Тати Прохорова">
-        <input class="popup__input popup__input_edit_job" type="text" name="description" placeholder="собрала эту красоту">
-        <button class="popup__save-button" type="submit">Сохранить</button>
+      <form class="popup__form" action="#" name="profile-form">
+        <input class="popup__input popup__input_edit_name" type="text" name="name" placeholder="Имя">
+        <input class="popup__input popup__input_edit_job" type="text" name="description" placeholder="Описание профиля">
+        <button class="popup__save-button button" type="submit">Сохранить</button>
       </form>
     </div>
   </div>

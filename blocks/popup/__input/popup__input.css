@@ -1,19 +1,15 @@
 .popup__input {
-  box-sizing: border-box;
-  border:none;
+  border: none;
   padding: 0;
-  padding-bottom: 10px;
+  padding-bottom: 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   width: 100%;
   margin: 0;
-  margin-bottom: 48px;
 }
 
 .popup__input:first-of-type {
-  margin-bottom: 23px;
+  margin-bottom: 30px;
 }
-
-
 
 .popup__input::placeholder {
   font-family: inherit;

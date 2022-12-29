@@ -4,14 +4,12 @@
   height: 19px;
   padding: 0;
   cursor: pointer;
-  border: 0;
   position: relative;
+  bottom: 25px;
   left: 240px;
-  bottom: 62px;
 }
 
-.elements__like-button:active {
-  background: no-repeat center url(../../../images/button-like-active.svg);
-  opacity: 1;
+.elements__like-button:hover {
+  opacity: .5;
 }
 
