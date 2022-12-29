@@ -1,18 +1,22 @@
 .profile__edit-button {
   background: no-repeat center url(../../../images/button-edit.svg), transparent;
-  padding: 7px;
-  outline: 1px solid #fff;
+  border: 1px solid #fff;
   width: 24px;
   height: 24px;
   grid-area: edit;
+  position: relative;
+  top: 10px;
+}
+
+.profile__edit-button {
+  opacity: .5;
 }
 
 @media screen and (max-width: 767px) {
   .profile__edit-button {
     width: 18px;
     height: 18px;
-    position: relative;
-    bottom: 6px;
+    top: -5px;
     background-size: 7.5px 7.5px;
   }
 }

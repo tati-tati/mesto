@@ -7,6 +7,10 @@
   margin: 0;
   padding-right: 18px;
   align-self: flex-end;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 520px;
 }
 
 @media screen and (max-width: 767px) {
@@ -15,5 +19,6 @@
     line-height: 33px;
     padding-right: 0;
     padding-bottom: 0;
+    max-width: 300px;
   }
 }

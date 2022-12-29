@@ -6,11 +6,15 @@
   grid-area: text;
   margin: 0;
   align-self: flex-start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 767px) {
   .profile__description {
     align-self: flex-end;
+    max-width: 300px;
   }
 }
 
