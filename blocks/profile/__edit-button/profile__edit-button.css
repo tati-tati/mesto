@@ -4,6 +4,8 @@
   width: 24px;
   height: 24px;
   grid-area: edit;
+  position: relative;
+  top: 12px;
 }
 
 .profile__edit-button:hover {
@@ -14,7 +16,8 @@
   .profile__edit-button {
     width: 18px;
     height: 18px;
-    top: -5px;
+    top: -6px;
     background-size: 7.5px 7.5px;
+    justify-self: flex-start;
   }
 }

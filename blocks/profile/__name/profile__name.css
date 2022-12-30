@@ -6,6 +6,7 @@
   grid-area: name;
   margin: 0;
   padding-right: 18px;
+  padding-bottom: 7px;
   align-self: flex-end;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -17,8 +18,9 @@
   .profile__name {
     font-size: 27px;
     line-height: 33px;
-    padding-right: 0;
+    padding-right: 13px;
     padding-bottom: 0;
-    max-width: 300px;
-  }
+    max-width: 230px;
+    justify-self: end;
+    }
 }

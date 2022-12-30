@@ -4,11 +4,12 @@
   align-items: center;
   max-width: 358px;
   margin: 0;
-  padding: 0;
+  padding: 34px 36px 37px;
 }
 
 @media screen and (max-width: 767px) {
   .popup__form {
   max-width: 238px;
+  padding: 25px 22px 25px;
   }
 }
