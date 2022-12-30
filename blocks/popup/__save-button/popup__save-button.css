@@ -4,6 +4,9 @@
   background-color: #000;
   color: #fff;
   border-radius: 2px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
   margin-top: 48px;
 }
 
@@ -13,7 +16,10 @@
 
 @media screen and (max-width: 767px) {
   .popup__save-button {
-    margin-top: 45px;
     max-width: 238px;
+    margin-top: 45px;
+    height: 46px;
+    font-size: 14px;
+    line-height: 17px;
   }
 }

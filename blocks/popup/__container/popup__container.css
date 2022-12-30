@@ -6,13 +6,12 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  padding: 34px 36px 37px;
+  padding: 0;
   position: relative;
 }
 
 @media screen and (max-width: 767px) {
   .popup__container {
-    padding: 25px 22px 25px 22px;
     margin-right: 19px;
     margin-left: 19px;
   }

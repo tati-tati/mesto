@@ -15,6 +15,9 @@
   .profile__description {
     align-self: flex-end;
     max-width: 300px;
+    font-size: 14px;
+    line-height: 17px;
+    max-width: 230px;
   }
 }
 
