@@ -14,6 +14,10 @@
 @media screen and (max-width: 767px) {
   .profile__description {
     align-self: flex-end;
+<<<<<<< HEAD
+=======
+    max-width: 300px;
+>>>>>>> f7d7bcc8153fba55980e6376f3013160281c3691
     font-size: 14px;
     line-height: 17px;
     max-width: 230px;
