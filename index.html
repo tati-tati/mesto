@@ -27,6 +27,7 @@
 <!--elements-->
     <section class="elements" aria-label="Галерея">
       <article class="elements__element">
+        <button class="elements__delete-button button" type="button" aria-label="Удалить"></button>
         <img class="elements__image" src="./images/Kamchatka.jpg" alt="фото Камчатка">
         <h2 class="elements__title">Камчатка</h2>
         <button class="elements__like-button button" type="button" aria-label="Поставить лайк"></button>
@@ -65,8 +66,8 @@
     <p class="footer__copyright">© 2022 Mesto Russia</p>
   </footer>
 
-<!--popup-->
-  <div class="popup">
+<!--popup edit profile-->
+  <div class="popup popup_edit_profile">
     <div class="popup__container">
       <button class="popup__close-button button" aria-label="Закрыть редактор профиля"></button>
       <form class="popup__form" action="#" name="profile-form">
@@ -74,6 +75,19 @@
         <input class="popup__input popup__input_edit_name" type="text" name="name" placeholder="Имя">
         <input class="popup__input popup__input_edit_job" type="text" name="description" placeholder="Описание профиля">
         <button class="popup__save-button button" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <!--popup add picture-->
+  <div class="popup popup_add_picture">
+    <div class="popup__container">
+      <button class="popup__close-button button" aria-label="Закрыть форму добавления картинок"></button>
+      <form class="popup__form" action="#" name="add-picture-form">
+        <h2 class="popup__title">Новое&nbsp;место</h2>
+        <input class="popup__input popup__input_edit_title" type="text" name="title" placeholder="Название">
+        <input class="popup__input popup__input_edit_picture-source" type="text" name="picture-source" placeholder="Ссылка на картинку">
+        <button class="popup__save-button button" type="submit">Создать</button>
       </form>
     </div>
   </div>
