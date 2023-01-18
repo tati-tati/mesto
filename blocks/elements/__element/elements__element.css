@@ -7,4 +7,5 @@
   white-space: nowrap;
   overflow: hidden;
   height: fit-content;
+  position: relative;
 }

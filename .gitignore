@@ -1,0 +1,129 @@
+//объявляю переменные
+//buttons
+const editButton = document.querySelector('.profile__edit-button');
+const addButton = document.querySelector('.profile__add-button');
+
+const likeButton = document.querySelector('.elements__like-button');
+const deleteButton = document.querySelector('.elements__delete-button');
+
+const closeButton = document.querySelectorAll('.popup__close-button');
+
+const picture = document.querySelector('.elements__image');
+
+//попапы
+const popup = document.querySelectorAll('.popup');
+const popupEditProfile = document.querySelector('.popup_edit_profile');
+const popupAddPicture = document.querySelector('.popup_add_picture');
+const popupShowPicture = document.querySelector('.popup_show_picture');
+
+
+//переменные для редактирования профиля
+let formProfileElement = document.querySelector('.popup__form_profile');
+let nameInput = document.querySelector('.popup__input_edit_name');
+let jobInput = document.querySelector('.popup__input_edit_job');
+let profileName = document.querySelector('.profile__name');
+let profileJob = document.querySelector('.profile__description');
+
+// //переменные для добавления поста
+// let formPostElement = document.querySelector('.popup__form_post');
+// let imgInput = document.querySelector('.popup__input_edit_picture-source');
+// let imgTitleInput = document.querySelector('.popup__input_edit_title');
+// let imgPost = document.querySelector('.elements__image');
+// let imgTitlePost = document.querySelector('.elements__title');
+
+
+//переменные для добавления карточек
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+// //!вызвать (edit) чтобы в форме были значения из профиля - работает!
+// editButton.addEventListener('click', function() {
+//   nameInput.value = profileName.textContent;
+//   jobInput.value = profileJob.textContent;
+//   openPopup(popupEditProfile);
+// });
+
+// //!открыть попап - функция (тогда работает закрыть тоже) - работает но открывает один попап везде
+// function openPopup(e) {
+//   e.classList.add('popup_opened');
+// }
+
+// //закрыть попап по нажатию на кнопку Х
+// function closePopup(profile) {
+//   profile.classList.remove('popup_opened');
+// }
+
+// closeButton.addEventListener('click', closePopup);
+
+// //карточки бога ради появитесь
+// const card = document.querySelector('#card').content;
+// const cardContainer = document.querySelector('.elements');
+// const element = card.querySelector('.elements__element').cloneNode(true);
+
+// function createCard(name, link) {
+// element.querySelector('.elements__title').textContent = name;
+// element.querySelector('.elements__image').src = link;
+// return createCard;
+// };
+
+// cardContainer.append(createCard);
+
+
+// Редактировать имя и описание профиля
+// function handleFormSubmit(evt) { // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
+//     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+//     profileName.textContent = nameInput.value;
+//     profileJob.textContent = jobInput.value;
+//     closePopup;
+// };
+
+// formProfileElement.addEventListener('submit', handleFormSubmit); // Прикрепляем обработчик к форме:
+
+// //вызвать (add)
+// addButton.addEventListener('click', openPopup(popupAddPicture));
+
+// //вызвать попап превью картинки
+// picture.addEventListener('click', openPopup(popupShowPicture));
+
+// // ставить лайки - работает! рвботает мазафака!
+// function addLike(e) {
+//   e.target.classList.toggle("elements__like-button_active");
+// }
+
+// likeButton.addEventListener('click', addLike);
+
+// //добавлять посты через форму input
+// function handleFormPost (evt) { // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
+//   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+//   imgPost.src = imgInput.value;
+//   imgTitlePost.textContent = imgTitleInput.value;
+//   closePopup();
+// };
+
+// formPostElement.addEventListener('submit', handleFormPost); // Прикрепляем обработчик к форме:
+
+
