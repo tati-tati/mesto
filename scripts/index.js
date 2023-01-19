@@ -1,7 +1,7 @@
 //кнопки
-const buttonEdit = document.querySelector('.profile__edit-button');
-const buttonAdd = document.querySelector('.profile__add-button');
-const buttonClose = document.querySelectorAll('.popup__close-button');
+const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');
+const buttonOpenPopupAdd = document.querySelector('.profile__add-button');
+const buttonCloseList = document.querySelectorAll('.popup__close-button');
 // нажатие на картинку из поста в функции createCard
 // const newCardImg =  newCard.querySelector('.elements__image');
 
@@ -31,34 +31,6 @@ const imgCard = document.querySelector('.popup__image');
 const cardTemplate = document.querySelector('#card-templete').content;
 const cardContainer = document.querySelector('.elements');
 const card = cardTemplate.querySelector('.elements__element');
-
-//массив из ТЗ
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
 
 //ПРАЗДНИК
 
@@ -109,15 +81,29 @@ function openPopupImgPreview (name, link) {
   titleCard.textContent = name;
 }
 
-// стартовый набор карточек из массива на стр при загрузке, исполним функцию сразу без вызова потом
-initialCards.forEach((card) => {
+//функция сабмита Add
+function submitAddForm (evt) {
+  evt.preventDefault();
+  const cardAdd = {
+    name: titleInput.value,
+    link: imgInput.value};
+  publishCard(cardAdd);
+  popupAddCardForm.reset(); //обнуляем фopму после создания
+  closePopup(popupAddCard);
+};
+
+//функция публикации создавнной карточки
+function publishCard (card) {
   cardContainer.prepend(createCard(card.name, card.link));
-});
+}
+
+// стартовый набор карточек из массива на стр при загрузке, исполним функцию сразу без вызова потом
+initialCards.forEach((card) => publishCard(card));
 
 // Реакция на действия пользователя (addEventListener)
 
 // Нажать на кнопку Edit -> откроется попап Edit со стартовыми значениями в инпуте из профиля
-buttonEdit.addEventListener('click', () => {
+buttonOpenPopupEdit.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(popupEditProfile);
@@ -132,26 +118,18 @@ popupEditProfile.addEventListener('submit', (evt) => {
 });
 
 // Нажать на кнопку Add -> откроется попап добавления поста
-buttonAdd.addEventListener('click', () => {
+buttonOpenPopupAdd.addEventListener('click', () => {
   openPopup(popupAddCard);
 });
 
 // Нажать на кнопку Создать (кодируем как 'submit' формы) Add ->
-popupAddCardForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  cardContainer.prepend(createCard(titleInput.value, imgInput.value));
-  popupAddCardForm.reset(); //обнуляем флому после создания
-  closePopup(popupAddCard);
+popupAddCardForm.addEventListener('submit', () => {
+  submitAddForm;
 });
 
-// //не работает мазафака! хотя было бы идеально удобно
-// buttonClose.addEventListener('click', (e) => {
-//   closePopup(e.target.closest('.popup'));
-// });
-
-//Плод мучений - нажать на кнопу Х, чтобы закрыть любой попап
-buttonClose.forEach(button => {
+//Нажать на кнопу Х, чтобы закрыть любой попап
+buttonCloseList.forEach(button => {
   button.addEventListener('click', (evt) => {
- closePopup(evt.currentTarget.closest('.popup'));
+  closePopup(evt.currentTarget.closest('.popup'));
   })
 });

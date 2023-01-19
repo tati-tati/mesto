@@ -72,8 +72,8 @@
       <button class="popup__close-button button" aria-label="Закрыть редактор профиля"></button>
       <form class="popup__form popup__form_profile" action="#" name="profile-form">
         <h2 class="popup__title">Редактировать&nbsp;профиль</h2>
-        <input class="popup__input popup__input_edit_name" type="text" name="name" placeholder="Имя">
-        <input class="popup__input popup__input_edit_job" type="text" name="description" placeholder="Описание профиля">
+        <input class="popup__input popup__input_edit_name" type="text" name="name" placeholder="Имя" required>
+        <input class="popup__input popup__input_edit_job" type="text" name="description" placeholder="Описание профиля" required>
         <button class="popup__save-button button" type="submit">Сохранить</button>
       </form>
     </div>
@@ -86,7 +86,7 @@
       <form class="popup__form popup__form_post" action="#" name="add-picture-form">
         <h2 class="popup__title">Новое&nbsp;место</h2>
         <input class="popup__input popup__input_edit_title" type="text" name="title" placeholder="Название">
-        <input class="popup__input popup__input_edit_picture-source" type="text" name="picture-source" placeholder="Ссылка на картинку">
+        <input class="popup__input popup__input_edit_picture-source" type="url" name="picture-source" placeholder="Ссылка на картинку">
         <button class="popup__save-button popup__save-button_add button" type="submit">Создать</button>
       </form>
     </div>
@@ -110,6 +110,7 @@
     <button class="elements__like-button button" type="button" aria-label="Поставить лайк"></button>
   </article>
 </template>
+<script src="./scripts/cards.js"></script>
 <script src="./scripts/index.js"></script>
 </body>
 </html>
