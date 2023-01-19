@@ -87,6 +87,7 @@ function submitAddForm (evt) {
   const cardAdd = {
     name: titleInput.value,
     link: imgInput.value};
+  console.log(cardAdd);
   publishCard(cardAdd);
   popupAddCardForm.reset(); //обнуляем фopму после создания
   closePopup(popupAddCard);
@@ -123,9 +124,7 @@ buttonOpenPopupAdd.addEventListener('click', () => {
 });
 
 // Нажать на кнопку Создать (кодируем как 'submit' формы) Add ->
-popupAddCardForm.addEventListener('submit', () => {
-  submitAddForm;
-});
+popupAddCardForm.addEventListener('submit', submitAddForm);
 
 //Нажать на кнопу Х, чтобы закрыть любой попап
 buttonCloseList.forEach(button => {
