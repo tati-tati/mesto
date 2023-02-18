@@ -1,6 +1,7 @@
 //кнопки
 const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');
 const buttonOpenPopupAdd = document.querySelector('.profile__add-button');
+const buttonSaveInPopupAdd = document.querySelector('.popup__save-button_add');
 const buttonCloseList = document.querySelectorAll('.popup__close-button');
 // const buttonSubmitList = document.querySelectorAll('.popup__save-button');
 // нажатие на картинку из поста в функции createCard
@@ -68,7 +69,6 @@ function addLike(e) {
 function openPopup(e) {
   e.classList.add('popup_opened');
   document.addEventListener('keydown', keyHandler);
-  enableValidation(formValidationConfig);
   // buttonSubmitList.classList.add('popup__save-button_state_disabled');
 }
 
@@ -151,6 +151,8 @@ popupEditProfile.addEventListener('submit', (evt) => {
 // Нажать на кнопку Add -> откроется попап добавления поста
 buttonOpenPopupAdd.addEventListener('click', () => {
   openPopup(popupAddCard);
+  buttonSaveInPopupAdd.classList.add('popup__save-button_state_disabled');
+  buttonSaveInPopupAdd.disabled = true;
 });
 
 // Нажать на кнопку Создать (кодируем как 'submit' формы) Add ->
