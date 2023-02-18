@@ -164,9 +164,10 @@ buttonCloseList.forEach(button => {
 });
 
 //нажать на оверлей и закрыть
-popupImgPreview.addEventListener('click', closePopupWithOverlay);
-popupEditProfile.addEventListener('click', closePopupWithOverlay);
-popupAddCard.addEventListener('click', closePopupWithOverlay);
+popupList.forEach(popup => {
+  popup.addEventListener('click', closePopupWithOverlay);})
+// popupEditProfile.addEventListener('click', closePopupWithOverlay);
+// popupAddCard.addEventListener('click', closePopupWithOverlay);
 
 
 
