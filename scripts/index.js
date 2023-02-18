@@ -6,6 +6,7 @@ const buttonCloseList = document.querySelectorAll('.popup__close-button');
 // const newCardImg =  newCard.querySelector('.elements__image');
 
 //попапы
+const popupList = Array.from(document.querySelectorAll('.popup'));
 const popupImgPreview = document.querySelector('.popup_show_picture');
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddCard = document.querySelector('.popup_add_picture');
@@ -87,7 +88,7 @@ function submitAddForm (evt) {
   const cardAdd = {
     name: titleInput.value,
     link: imgInput.value};
-  console.log(cardAdd);
+  // console.log(cardAdd);
   publishCard(cardAdd);
   popupAddCardForm.reset(); //обнуляем фopму после создания
   closePopup(popupAddCard);
@@ -96,6 +97,15 @@ function submitAddForm (evt) {
 //функция публикации создавнной карточки
 function publishCard (card) {
   cardContainer.prepend(createCard(card.name, card.link));
+}
+
+//функция закрытия попапа по клику на оверлей
+function closePopupWithOverlay (event) {
+  popupList.forEach(item => {
+    if (event.target === event.currentTarget) {
+     closePopup(item);
+    }
+  });
 }
 
 // стартовый набор карточек из массива на стр при загрузке, исполним функцию сразу без вызова потом
@@ -126,9 +136,26 @@ buttonOpenPopupAdd.addEventListener('click', () => {
 // Нажать на кнопку Создать (кодируем как 'submit' формы) Add ->
 popupAddCardForm.addEventListener('submit', submitAddForm);
 
-//Нажать на кнопу Х, чтобы закрыть любой попап
+// Нажать на кнопу Х, чтобы закрыть любой попап
 buttonCloseList.forEach(button => {
   button.addEventListener('click', (evt) => {
   closePopup(evt.currentTarget.closest('.popup'));
   })
 });
+
+//нажать на оверлей и закрыть
+popupImgPreview.addEventListener('click', closePopupWithOverlay);
+popupEditProfile.addEventListener('click', closePopupWithOverlay);
+popupAddCard.addEventListener('click', closePopupWithOverlay);
+
+//нажать на esc и закрыть
+document.addEventListener('keydown', keyHandler);
+
+function keyHandler (evt) {
+  popupList.forEach(item => {
+    if (evt.key === 'Escape') {
+      closePopup(item);
+    }
+  });
+  }
+
