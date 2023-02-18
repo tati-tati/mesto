@@ -1,6 +1,6 @@
 .elements__image {
   display: block;
-  max-height: 282px;
+  height: 282px;
   min-width: 282px;
   object-fit: cover;
   cursor: pointer;

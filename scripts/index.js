@@ -2,6 +2,7 @@
 const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');
 const buttonOpenPopupAdd = document.querySelector('.profile__add-button');
 const buttonCloseList = document.querySelectorAll('.popup__close-button');
+// const buttonSubmitList = document.querySelectorAll('.popup__save-button');
 // нажатие на картинку из поста в функции createCard
 // const newCardImg =  newCard.querySelector('.elements__image');
 
@@ -66,11 +67,15 @@ function addLike(e) {
 // функция открытия попапов (e-нужный попап)
 function openPopup(e) {
   e.classList.add('popup_opened');
+  document.addEventListener('keydown', keyHandler);
+  enableValidation(formValidationConfig);
+  // buttonSubmitList.classList.add('popup__save-button_state_disabled');
 }
 
 //функция закрытия попапов (e-нужный попап)
 function closePopup(e) {
   e.classList.remove('popup_opened');
+  document.removeEventListener('keydown', keyHandler);
 }
 
 // функция открытия попапа с большой картинкой popupImgPreview
@@ -106,6 +111,21 @@ function closePopupWithOverlay (event) {
      closePopup(item);
     }
   });
+}
+
+// функция по закрытию попапа с нажатием Esc
+// function keyHandler (evt) {
+//   popupList.forEach(item => {
+//     if (evt.key === 'Escape') {
+//       closePopup(item);
+//     }
+//   });
+//   }
+
+function keyHandler (evt) {
+  if (evt.key === 'Escape') {
+    closePopup(document.querySelector('.popup_opened'));
+  };
 }
 
 // стартовый набор карточек из массива на стр при загрузке, исполним функцию сразу без вызова потом
@@ -148,14 +168,5 @@ popupImgPreview.addEventListener('click', closePopupWithOverlay);
 popupEditProfile.addEventListener('click', closePopupWithOverlay);
 popupAddCard.addEventListener('click', closePopupWithOverlay);
 
-//нажать на esc и закрыть
-document.addEventListener('keydown', keyHandler);
 
-function keyHandler (evt) {
-  popupList.forEach(item => {
-    if (evt.key === 'Escape') {
-      closePopup(item);
-    }
-  });
-  }
 

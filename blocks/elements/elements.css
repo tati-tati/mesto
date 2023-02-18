@@ -3,7 +3,7 @@
   row-gap: 20px;
   column-gap: 17px;
   grid-template-columns: repeat(auto-fit, 282px);
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
 }
 
