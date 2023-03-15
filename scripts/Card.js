@@ -2,11 +2,11 @@
 import { openPopupImgPreview } from './index.js';
 
 class Card {
-  constructor(name, link, templateSelector, openPopupImgPreview) {
+  constructor(name, link, templateSelector) {
     this._name = name;
     this._link = link;
     this._templateSelector = templateSelector;
-    this._openPopupImgPreview = openPopupImgPreview;
+    // this._openPopupImgPreview = openPopupImgPreview;
   }
 
   _getTemplate() {
@@ -44,7 +44,7 @@ class Card {
     this._element.querySelector('.elements__delete-button').addEventListener('click', this._removeCard);
     //по клику по картинке работет функция openPopupImgPreview открывается попап с большой картинкой
     this._element.addEventListener('click', () => {
-      this._openPopupImgPreview(this._name, this._link);  //не работает шайзе
+    openPopupImgPreview(this._name, this._link);  //не работает шайзе
     });
   }
 }
