@@ -1,3 +1,23 @@
+import Card from './Card.js';
+import initialCards from './array-cards.js';
+import FormValidator from './FormValidator.js';
+import { formValidationConfig } from './validationConfig.js'
+
+// const config = new FormValidator(formValidationConfig);
+// config.enableValidation();
+
+const cardContainer = document.querySelector('.elements');
+
+// стартовый набор карточек из массива на стр при загрузке, исполним функцию сразу без вызова потом
+// initialCards.forEach((card) => publishCard(card));
+initialCards.forEach((item) => {
+  const card = new Card(item.name, item.link, '#card-templete');
+  cardContainer.prepend(card.createCard());
+})
+
+
+
+
 //кнопки
 const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');
 const buttonOpenPopupAdd = document.querySelector('.profile__add-button');
@@ -30,46 +50,17 @@ const titleCard = document.querySelector('.popup__subtitle');
 const imgCard = document.querySelector('.popup__image');
 
 
-//шаблон
-const cardTemplate = document.querySelector('#card-templete').content;
-const cardContainer = document.querySelector('.elements');
-const card = cardTemplate.querySelector('.elements__element');
+// //шаблон
+// const cardTemplate = document.querySelector('#card-templete').content;
+// const cardContainer = document.querySelector('.elements');
+// const card = cardTemplate.querySelector('.elements__element');
 
 //ПРАЗДНИК
-
-// функция удаления карточки (e - elements__element ближайший к клику)
-function removeCard (e) {
-  e.target.closest('.elements__element').remove();
-}
-
-// функция создания карточки
-function createCard(name, link) {
-  const newCard = card.cloneNode('true'); //копируем шаблон с содержимым
-  //переменная для картинки в шаблоне с источником
-  const newCardImg =  newCard.querySelector('.elements__image');
-  newCardImg.src = link;
-  //переменная для подписи в шаблоне = источник, добавляем значение в тег атрибут alt
-  newCard.querySelector('.elements__title').textContent = name;
-  newCardImg.alt = name;
-  //по клику на лайк в любой карточке сработает функция addLike
-  newCard.querySelector('.elements__like-button').addEventListener('click', addLike);
-  //по клику на мусорку на любой карточке сработает функция removeCard
-  newCard.querySelector('.elements__delete-button').addEventListener('click', removeCard);
-  //по клику по картинке работет функция openPopupImgPreview открывается попап с большой картинкой
-  newCardImg.addEventListener('click', () => openPopupImgPreview(name, link));
-  return newCard;
-}
-
-// функция ставить лайки с подменой (поочередной) модификатора
-function addLike(e) {
-  e.target.classList.toggle('elements__like-button_active');
-}
 
 // функция открытия попапов (e-нужный попап)
 function openPopup(e) {
   e.classList.add('popup_opened');
   document.addEventListener('keydown', keyHandler);
-  // buttonSubmitList.classList.add('popup__save-button_state_disabled');
 }
 
 //функция закрытия попапов (e-нужный попап)
@@ -79,20 +70,21 @@ function closePopup(e) {
 }
 
 // функция открытия попапа с большой картинкой popupImgPreview
-function openPopupImgPreview (name, link) {
+export function openPopupImgPreview (card) {
   openPopup(popupImgPreview);
   //из массива добавится в ф-ии создания карточки
-  imgCard.src = link;
-  imgCard.alt = name;
+  imgCard.src = card._link;
+  imgCard.alt = card._name;
   titleCard.textContent = name;
 }
 
-//функция сабмита Add
+document.querySelector('.elements__image').addEventListener('click', openPopupImgPreview);
+
+
+// //функция сабмита Add
 function submitAddForm (evt) {
   evt.preventDefault();
-  const cardAdd = {
-    name: titleInput.value,
-    link: imgInput.value};
+  const cardAdd = new Card (titleInput.value, imgInput.value, '#card-templete');
   // console.log(cardAdd);
   publishCard(cardAdd);
   popupAddCardForm.reset(); //обнуляем фopму после создания
@@ -101,7 +93,7 @@ function submitAddForm (evt) {
 
 //функция публикации создавнной карточки
 function publishCard (card) {
-  cardContainer.prepend(createCard(card.name, card.link));
+  cardContainer.prepend(card.createCard());
 }
 
 //функция закрытия попапа по клику на оверлей
@@ -128,8 +120,7 @@ function keyHandler (evt) {
   };
 }
 
-// стартовый набор карточек из массива на стр при загрузке, исполним функцию сразу без вызова потом
-initialCards.forEach((card) => publishCard(card));
+
 
 // Реакция на действия пользователя (addEventListener)
 
@@ -168,8 +159,3 @@ buttonCloseList.forEach(button => {
 //нажать на оверлей и закрыть
 popupList.forEach(popup => {
   popup.addEventListener('click', closePopupWithOverlay);})
-// popupEditProfile.addEventListener('click', closePopupWithOverlay);
-// popupAddCard.addEventListener('click', closePopupWithOverlay);
-
-
-
