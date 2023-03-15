@@ -44,7 +44,7 @@ class Card {
     this._element.querySelector('.elements__delete-button').addEventListener('click', this._removeCard);
     //по клику по картинке работет функция openPopupImgPreview открывается попап с большой картинкой
     this._element.addEventListener('click', () => {
-      this.openPopupImgPreview;  //не работает шайзе
+      this._openPopupImgPreview(this._name, this._link);  //не работает шайзе
     });
   }
 }
