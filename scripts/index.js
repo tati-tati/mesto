@@ -3,21 +3,6 @@ import initialCards from './array-cards.js';
 import FormValidator from './FormValidator.js';
 import { formValidationConfig } from './validationConfig.js'
 
-// const config = new FormValidator(formValidationConfig);
-// config.enableValidation();
-
-const cardContainer = document.querySelector('.elements');
-
-// стартовый набор карточек из массива на стр при загрузке, исполним функцию сразу без вызова потом
-// initialCards.forEach((card) => publishCard(card));
-initialCards.forEach((item) => {
-  const card = new Card(item.name, item.link, '#card-templete');
-  cardContainer.prepend(card.createCard());
-})
-
-
-
-
 //кнопки
 const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');
 const buttonOpenPopupAdd = document.querySelector('.profile__add-button');
@@ -49,6 +34,8 @@ const imgInput = popupAddCard.querySelector('.popup__input_edit_picture-source')
 const titleCard = document.querySelector('.popup__subtitle');
 const imgCard = document.querySelector('.popup__image');
 
+const cardContainer = document.querySelector('.elements');
+
 
 // //шаблон
 // const cardTemplate = document.querySelector('#card-templete').content;
@@ -56,6 +43,18 @@ const imgCard = document.querySelector('.popup__image');
 // const card = cardTemplate.querySelector('.elements__element');
 
 //ПРАЗДНИК
+
+//включаем валидацию на все формы по умолчанию (собирается массив и forEach к каждой прикручивает)
+const config = new FormValidator(formValidationConfig);
+config.enableValidation();
+
+
+// стартовый набор карточек из массива на стр при загрузке, исполним функцию сразу без вызова потом
+// initialCards.forEach((card) => publishCard(card));
+initialCards.forEach((item) => {
+  const card = new Card(item.name, item.link, '#card-templete');
+  cardContainer.prepend(card.createCard());
+})
 
 // функция открытия попапов (e-нужный попап)
 function openPopup(e) {
@@ -75,7 +74,7 @@ export function openPopupImgPreview (card) {
   //из массива добавится в ф-ии создания карточки
   imgCard.src = card._link;
   imgCard.alt = card._name;
-  titleCard.textContent = name;
+  titleCard.textContent = card._name;
 }
 
 document.querySelector('.elements__image').addEventListener('click', openPopupImgPreview);
@@ -119,7 +118,6 @@ function keyHandler (evt) {
     closePopup(document.querySelector('.popup_opened'));
   };
 }
-
 
 
 // Реакция на действия пользователя (addEventListener)

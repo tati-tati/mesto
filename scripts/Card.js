@@ -20,10 +20,12 @@ class Card {
 
   _addLike(e) {
     e.target.classList.toggle('elements__like-button_active');
+    e.stopPropagation();
   }
 
   _removeCard (e) {
     e.target.closest('.elements__element').remove();
+    e.stopPropagation();
   }
 
   createCard() {
@@ -44,7 +46,7 @@ class Card {
     this._element.querySelector('.elements__delete-button').addEventListener('click', this._removeCard);
     //по клику по картинке работет функция openPopupImgPreview открывается попап с большой картинкой
     this._element.addEventListener('click', () => {
-    openPopupImgPreview(this._name, this._link);  //не работает шайзе
+    openPopupImgPreview(this);
     });
   }
 }
