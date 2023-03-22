@@ -1,5 +1,5 @@
 
-import { openPopupImgPreview } from './index.js';
+import { openPopupImgPreview } from './utils.js';
 
 class Card {
   constructor(name, link, templateSelector) {
@@ -52,28 +52,3 @@ class Card {
 }
 
 export default Card;
-
-
-  // //шаблон
-  // const cardTemplate = document.querySelector('#card-templete').content;
-  // const cardContainer = document.querySelector('.elements');
-  // const card = cardTemplate.querySelector('.elements__element');
-
-  //   // функция создания карточки
-  // function createCard(name, link) {
-  //   const newCard = card.cloneNode('true'); //копируем шаблон с содержимым
-  //   //переменная для картинки в шаблоне с источником
-  //   const newCardImg =  newCard.querySelector('.elements__image');
-  //   newCardImg.src = link;
-  //   //переменная для подписи в шаблоне = источник, добавляем значение в тег атрибут alt
-  //   newCard.querySelector('.elements__title').textContent = name;
-  //   newCardImg.alt = name;
-  //   //по клику на лайк в любой карточке сработает функция addLike
-  //   newCard.querySelector('.elements__like-button').addEventListener('click', addLike);
-  //   //по клику на мусорку на любой карточке сработает функция removeCard
-  //   newCard.querySelector('.elements__delete-button').addEventListener('click', removeCard);
-  //   //по клику по картинке работет функция openPopupImgPreview открывается попап с большой картинкой
-  //   newCardImg.addEventListener('click', () => openPopupImgPreview(name, link));
-  //   return newCard;
-  // }
-
