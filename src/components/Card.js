@@ -1,12 +1,11 @@
 
-import { openPopupImgPreview } from './utils.js';
+import { openPopupImgPreview } from '../utils/utils.js';
 
 class Card {
   constructor(name, link, templateSelector) {
     this._name = name;
     this._link = link;
     this._templateSelector = templateSelector;
-    // this._openPopupImgPreview = openPopupImgPreview;
   }
 
   _getTemplate() {

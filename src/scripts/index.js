@@ -1,36 +1,27 @@
-import Card from './Card.js';
+import Card from '../components/Card.js';
+import Section from '../components/Section.js';
 import initialCards from './array-cards.js';
-import FormValidator from './FormValidator.js';
+import FormValidator from '../components/FormValidator.js';
 import { formValidationConfig } from './validationConfig.js';
-import { openPopup, closePopup } from './utils.js';
+import { openPopup, closePopup } from '../utils/utils.js';
+import {
+  buttonOpenPopupEdit,
+  buttonOpenPopupAdd,
+  buttonCloseList,
+  popupList,
+  popupEditProfile,
+  popupAddCard,
+  addPostForm,
+  editProfileForm,
+  nameInput,
+  jobInput,
+  profileName,
+  profileJob,
+  titleInput,
+  imgInput,
+  cardContainerSelector
+} from '../utils/constants.js';
 
-//кнопки
-const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');
-const buttonOpenPopupAdd = document.querySelector('.profile__add-button');
-// const buttonSaveInPopupAdd = document.querySelector('.popup__save-button_add');
-const buttonCloseList = document.querySelectorAll('.popup__close-button');
-
-//попапы
-const popupList = Array.from(document.querySelectorAll('.popup'));
-const popupEditProfile = document.querySelector('.popup_edit-profile');
-const popupAddCard = document.querySelector('.popup_add_picture');
-//форма из попапа Add
-const addPostForm = popupAddCard.querySelector('.popup__form_post');
-//форма из попапа Edit
-const editProfileForm = document.querySelector('.popup__form_profile');
-
-//инпуты для попапа Edit Profile
-const nameInput = popupEditProfile.querySelector('.popup__input_edit_name');
-const jobInput = popupEditProfile.querySelector('.popup__input_edit_job');
-//поля для исполнения инпутов на стр из Edit Profile
-const profileName = document.querySelector('.profile__name');
-const profileJob = document.querySelector('.profile__description');
-
-//инпуты для попапа Add
-const titleInput = popupAddCard.querySelector('.popup__input_edit_title');
-const imgInput = popupAddCard.querySelector('.popup__input_edit_picture-source');
-
-const cardContainer = document.querySelector('.elements');
 
 //ПРАЗДНИК
 
@@ -47,26 +38,34 @@ function makeCardFromClass(item) {
 }
 
 // стартовый набор карточек из массива на стр при загрузке, исполним функцию сразу
-initialCards.forEach((item) => {
-  cardContainer.prepend(makeCardFromClass(item).createCard());
-})
+// initialCards.forEach((item) => {
+//   cardContainer.prepend(makeCardFromClass(item).createCard());
+// })
+
+const cardsOnPage = new Section( {
+  items: initialCards,
+  renderer:(item) => {
+  const card = makeCardFromClass(item).createCard();
+  cardsOnPage.addItem(card);
+},
+}, cardContainerSelector);
+
+cardsOnPage.renderItems();
+
 
 //функция сабмита Add
 function submitAddForm (evt) {
   evt.preventDefault();
-  const cardAdd = {
-  name: titleInput.value,
-  link: imgInput.value,
-  templateSelector: '#card-templete'};
-  publishCard(makeCardFromClass(cardAdd));
+  const cardAdd = new Card (
+    titleInput.value,
+    imgInput.value, '.card-templete');
+
+  cardsOnPage.addItem(cardAdd.createCard());
+  
   addPostForm.reset(); //обнуляем фopму после создания
   closePopup(popupAddCard);
 };
 
-//функция публикации создавнной карточки
-function publishCard (card) {
-  cardContainer.prepend(card.createCard());
-}
 
 //функция закрытия попапа по клику на оверлей
 function closePopupWithOverlay (event) {
