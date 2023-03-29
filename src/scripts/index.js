@@ -3,7 +3,8 @@ import Section from '../components/Section.js';
 import initialCards from './array-cards.js';
 import FormValidator from '../components/FormValidator.js';
 import { formValidationConfig } from './validationConfig.js';
-import { openPopup, closePopup } from '../utils/utils.js';
+import { Popup } from '../components/Popup.js';
+// import { openPopup, closePopup } from '../utils/utils.js';
 import {
   buttonOpenPopupEdit,
   buttonOpenPopupAdd,
@@ -38,20 +39,24 @@ function makeCardFromClass(item) {
 }
 
 // стартовый набор карточек из массива на стр при загрузке, исполним функцию сразу
-// initialCards.forEach((item) => {
-//   cardContainer.prepend(makeCardFromClass(item).createCard());
-// })
-
 const cardsOnPage = new Section( {
   items: initialCards,
   renderer:(item) => {
   const card = makeCardFromClass(item).createCard();
   cardsOnPage.addItem(card);
-},
+  },
 }, cardContainerSelector);
 
 cardsOnPage.renderItems();
 
+// POPUP ADD
+const addPostPopup = new Popup( popupAddCard );
+// Нажать на кнопку Add -> откроется попап добавления поста
+buttonOpenPopupAdd.addEventListener('click', () => {
+  addPostPopup.openPopup();
+  addPostPopup.setEventListeners();
+  addPostFormValidator.disableSubmitButton();
+});
 
 //функция сабмита Add
 function submitAddForm (evt) {
@@ -59,56 +64,55 @@ function submitAddForm (evt) {
   const cardAdd = new Card (
     titleInput.value,
     imgInput.value, '.card-templete');
-
   cardsOnPage.addItem(cardAdd.createCard());
-  
+
   addPostForm.reset(); //обнуляем фopму после создания
-  closePopup(popupAddCard);
+  addPostPopup.closePopup();
 };
-
-
-//функция закрытия попапа по клику на оверлей
-function closePopupWithOverlay (event) {
-  popupList.forEach(item => {
-    if (event.target === event.currentTarget) {
-     closePopup(item);
-    }
-  });
-}
-
-// Реакция на действия пользователя (addEventListener)
-
-// Нажать на кнопку Edit -> откроется попап Edit со стартовыми значениями в инпуте из профиля
-buttonOpenPopupEdit.addEventListener('click', () => {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
-  openPopup(popupEditProfile);
-});
-
-// Нажать на кнопку Сохранить(кодируем как 'submit' формы) Edit ->
-popupEditProfile.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-  closePopup(popupEditProfile);
-});
-
-// Нажать на кнопку Add -> откроется попап добавления поста
-buttonOpenPopupAdd.addEventListener('click', () => {
-  openPopup(popupAddCard);
-  addPostFormValidator.disableSubmitButton();
-});
 
 // Нажать на кнопку Создать (кодируем как 'submit' формы) Add ->
 addPostForm.addEventListener('submit', submitAddForm);
 
-// Нажать на кнопу Х, чтобы закрыть любой попап
-buttonCloseList.forEach(button => {
-  button.addEventListener('click', (evt) => {
-  closePopup(evt.currentTarget.closest('.popup'));
-  })
-});
+// POPUP EDIT
+const editProfilePopup = new Popup(popupEditProfile);
+console.log(editProfilePopup)
 
-//нажать на оверлей и закрыть
-popupList.forEach(popup => {
-  popup.addEventListener('click', closePopupWithOverlay);})
+buttonOpenPopupEdit.addEventListener('click', () => {
+    nameInput.value = profileName.textContent;
+    jobInput.value = profileJob.textContent;
+    editProfilePopup.openPopup();
+    editProfilePopup.setEventListeners();
+  });
+
+
+// Реакция на действия пользователя (addEventListener)
+
+// Нажать на кнопку Edit -> откроется попап Edit со стартовыми значениями в инпуте из профиля
+// buttonOpenPopupEdit.addEventListener('click', () => {
+//   nameInput.value = profileName.textContent;
+//   jobInput.value = profileJob.textContent;
+//   openPopup(popupEditProfile);
+// });
+
+// Нажать на кнопку Сохранить(кодируем как 'submit' формы) Edit ->
+// popupEditProfile.addEventListener('submit', (evt) => {
+//   evt.preventDefault();
+//   profileName.textContent = nameInput.value;
+//   profileJob.textContent = jobInput.value;
+//   closePopup(popupEditProfile);
+// });
+
+
+
+
+
+// // Нажать на кнопу Х, чтобы закрыть любой попап
+// buttonCloseList.forEach(button => {
+//   button.addEventListener('click', (evt) => {
+//   closePopup(evt.currentTarget.closest('.popup'));
+//   })
+// });
+
+// //нажать на оверлей и закрыть
+// popupList.forEach(popup => {
+//   popup.addEventListener('click', closePopupWithOverlay);})

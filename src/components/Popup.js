@@ -1,21 +1,25 @@
-export default class Popup {
-  cunstructor(popupSelector) {
-    this.popup = document. querySelector(popupSelector);
+export class Popup {
+  constructor (popupSelector) {
+    this._popup = document.querySelector(popupSelector);
+
+    this._closePopupButton = this._popup.querySelector('.popup__close-button');
   }
 
   openPopup() {
-    this.popup.classList.add('popup_opened');
-    document.addEventListener('keydown', this._handleEscClose);
+    // console.log(this._popup, 'ПОПАП ОТКРЫТ');
+    this._popup.classList.add('popup_opened');
+    document.addEventListener('keydown', this._handleEscClose.bind(this));
   }
 
   closePopup() {
-    this.popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', this._handleEscClose);
+    // console.log(this._popup, 'ПОПАП ЗАКРЫТ');
+    this._popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', this._handleEscClose.bind(this));
   }
 
-  _handleEscClose (evt) {
-    if (evt.key === 'Escape') {
-      closePopup(document.querySelector('.popup_opened'));
+  _handleEscClose (event) {
+    if (event.key === 'Escape') {
+      this.closePopup();
     };
   }
 
@@ -23,27 +27,15 @@ export default class Popup {
   //слушатель клика иконке закрытия попапа. Модальное окно также
   // закрывается при клике на затемнённую область вокруг формы.
   setEventListeners () {
-
+    this._closePopupButton.addEventListener('click',() => this.closePopup());
+    this._popup.addEventListener('click', (event) => {
+        this._closePopupWithOverlay(event);
+    })
   }
 
-  // допилить
   _closePopupWithOverlay (event) {
-    popupList.forEach(item => {
-      if (event.target === event.currentTarget) {
-       closePopup(item);
-      }
-    });
-  }
-
-  // Нажать на кнопу Х, чтобы закрыть любой попап
-  buttonCloseList.forEach(button => {
-  button.addEventListener('click', (evt) => {
-  closePopup(evt.currentTarget.closest('.popup'));
-  })
-});
-
-//нажать на оверлей и закрыть
-popupList.forEach(popup => {
-  popup.addEventListener('click', closePopupWithOverlay);})
-
+    if (event.target === event.currentTarget) {
+     this.closePopup();
+    }
+  };
 }
