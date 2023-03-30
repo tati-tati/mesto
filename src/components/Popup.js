@@ -6,13 +6,13 @@ export class Popup {
   }
 
   openPopup() {
-    console.log(this._popup, 'ПОПАП ОТКРЫТ');
+    // console.log(this._popup, 'ПОПАП ОТКРЫТ');
     this._popup.classList.add('popup_opened');
     document.addEventListener('keydown', this._handleEscClose.bind(this));
   }
 
   closePopup() {
-    console.log(this._popup, 'ПОПАП ЗАКРЫТ');
+    // console.log(this._popup, 'ПОПАП ЗАКРЫТ');
     this._popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', this._handleEscClose.bind(this));
   }
