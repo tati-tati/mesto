@@ -4,7 +4,9 @@ import initialCards from './array-cards.js';
 import FormValidator from '../components/FormValidator.js';
 import { formValidationConfig } from './validationConfig.js';
 import { Popup } from '../components/Popup.js';
-// import { openPopup, closePopup } from '../utils/utils.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+
 import {
   buttonOpenPopupEdit,
   buttonOpenPopupAdd,
@@ -35,7 +37,7 @@ editProfileFormValidator.enableValidation();
 
 // функция создания карточки из класса(без публикации)
 function makeCardFromClass(item) {
- return new Card(item.name, item.link, '#card-templete');
+ return new Card(item, '#card-templete', handleCardClick);
 }
 
 // стартовый набор карточек из массива на стр при загрузке, исполним функцию сразу
@@ -50,28 +52,40 @@ const cardsOnPage = new Section( {
 cardsOnPage.renderItems();
 
 // POPUP ADD
-const addPostPopup = new Popup( popupAddCard );
+const addPostPopup = new PopupWithForm (
+  popupAddCard,
+   (item) => {
+   console.log(item)
+   addPostPopup.closePopup();
+   cardsOnPage.addItem(makeCardFromClass(item).createCard());
+  });
+
+  console.log(addPostPopup)
+
 // Нажать на кнопку Add -> откроется попап добавления поста
 buttonOpenPopupAdd.addEventListener('click', () => {
   addPostPopup.openPopup();
-  addPostPopup.setEventListeners();
   addPostFormValidator.disableSubmitButton();
 });
 
-//функция сабмита Add
-function submitAddForm (evt) {
-  evt.preventDefault();
-  const cardAdd = new Card (
-    titleInput.value,
-    imgInput.value, '.card-templete');
-  cardsOnPage.addItem(cardAdd.createCard());
+addPostPopup.setEventListeners();
 
-  addPostForm.reset(); //обнуляем фopму после создания
-  addPostPopup.closePopup();
-};
+//функция сабмита Add
+// function submitAddForm (evt) {
+//   evt.preventDefault();
+//   const cardAdd = new Card (
+//     titleInput.value,
+//     imgInput.value, '.card-templete', handleCardClick);
+//   cardsOnPage.addItem(cardAdd.createCard());
+
+//   addPostForm.reset(); //обнуляем фopму после создания
+//   addPostPopup.closePopup();
+// };
+
+
 
 // Нажать на кнопку Создать (кодируем как 'submit' формы) Add ->
-addPostForm.addEventListener('submit', submitAddForm);
+// addPostForm.addEventListener('submit', submitAddForm);
 
 // POPUP EDIT
 const editProfilePopup = new Popup(popupEditProfile);
@@ -81,9 +95,15 @@ buttonOpenPopupEdit.addEventListener('click', () => {
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
     editProfilePopup.openPopup();
-    editProfilePopup.setEventListeners();
   });
+  editProfilePopup.setEventListeners();
 
+// POPUP PREVIEW PIC
+const popupPreview = new PopupWithImage('.popup_show_picture');
+function handleCardClick(title, link) {
+  popupPreview.openPopup(title, link);
+}
+popupPreview.setEventListeners();
 
 // Реакция на действия пользователя (addEventListener)
 
