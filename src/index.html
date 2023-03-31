@@ -5,22 +5,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
-  <link rel="stylesheet" href="./pages/index.css">
+  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
   <!--скпипты-->
-  <script type="module" src="./pages/index.js" defer></script>
+  <!-- <script type="module" src="./pages/index.js" defer></script> -->
 </head>
 
 <body class="page">
 <!--header-->
   <header class="header">
-    <img class="header__logo" src="./images/mesto_logo.svg" alt="логотип место">
+    <img class="header__logo" src="<%=require('./images/mesto_logo.svg')%>" alt="логотип место">
   </header>
 
 <!--main-->
   <main class="content"> <!--пустой класс-->
 <!--profile-->
     <section class="profile">
-      <img class="profile__avatar" src="./images/avatar_jeremiah-del-mar-6wEM5ZJWVDQ-unsplash.jpg" alt="аватар">
+      <img class="profile__avatar" src="<%=require('./images/avatar_jeremiah-del-mar-6wEM5ZJWVDQ-unsplash.jpg')%>" alt="аватар">
       <h1 class="profile__name">Тати Прохорова</h1>
       <p class="profile__description">собрала эту красоту</p>
       <button class="profile__edit-button button" type="button" aria-label="Редактировать профиль"></button>
