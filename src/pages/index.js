@@ -4,7 +4,7 @@ import Card from '../components/Card.js';
 import Section from '../components/Section.js';
 import initialCards from '../utils/array-cards.js';
 import FormValidator from '../components/FormValidator.js';
-import { formValidationConfig } from '../components/validationConfig.js';
+import { formValidationConfig } from '../utils/validationConfig.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
@@ -22,6 +22,7 @@ import {
   profileJob,
   cardContainerSelector
 } from '../utils/constants.js';
+import { query } from 'express';
 
 //ПРАЗДНИК
 
@@ -92,3 +93,5 @@ function handleCardClick(title, link) {
   popupPreview.openPopup(title, link);
 }
 popupPreview.setEventListeners();
+
+
