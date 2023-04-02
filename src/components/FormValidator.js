@@ -1,4 +1,3 @@
-
 class FormValidator {
   constructor(validationConfig, formElement) {
     this._formSelector = validationConfig.formSelector;
@@ -6,9 +5,12 @@ class FormValidator {
     this._errorClass = validationConfig.errorClass;
     this._buttonSelector = validationConfig.buttonSelector;
     this._buttonDisabledClass = validationConfig.buttonDisabledClass;
+    this._spanErrorList = Array.from(document.querySelectorAll(validationConfig.spanErrorSelector));
 
     this._formElement = formElement;
     this._formButton = formElement.querySelector('.popup__save-button_add');
+    this._inputElList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+
   }
 
   _disableSubmit(event) {
@@ -27,8 +29,7 @@ class FormValidator {
   }
 
   _addInputListeners() {
-    const inputElList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    inputElList.forEach((item) => {
+    this._inputElList.forEach((item) => {
       item.addEventListener('input', (event) => {
         this._handleFormInput(event);
       });
@@ -64,6 +65,15 @@ class FormValidator {
   disableSubmitButton() {
     this._formButton.classList.add(this._buttonDisabledClass);
     this._formButton.disabled = true;
+  }
+
+  cleanErrorsOnOpen() {
+    this._spanErrorList.forEach((span) => {
+      span.textContent = '';
+    });
+    this._inputElList.forEach((input) => {
+      input.classList.remove(this._errorClass);
+      });
   }
 }
 

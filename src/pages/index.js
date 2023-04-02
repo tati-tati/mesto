@@ -74,8 +74,8 @@ const userData = new UserInfo( dataElements );
 // POPUP EDIT
 const editProfilePopup = new PopupWithForm(
   popupEditProfile,
-  () => {
-    userData.setUserInfo(editProfilePopup.getInputValues())
+  (collectedData) => {
+    userData.setUserInfo(collectedData);
     editProfilePopup.closePopup();
   });
 
@@ -83,6 +83,7 @@ buttonOpenPopupEdit.addEventListener('click', () => {
     nameInput.value = userData.getUserInfo().name;
     jobInput.value = userData.getUserInfo().job;
     editProfilePopup.openPopup();
+    editProfileFormValidator.cleanErrorsOnOpen();
   });
   editProfilePopup.setEventListeners();
 
