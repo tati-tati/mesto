@@ -22,7 +22,6 @@ import {
   profileJob,
   cardContainerSelector
 } from '../utils/constants.js';
-import { query } from 'express';
 
 //ПРАЗДНИК
 
