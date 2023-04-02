@@ -8,7 +8,6 @@ import { formValidationConfig } from '../utils/validationConfig.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
-
 import {
   buttonOpenPopupEdit,
   buttonOpenPopupAdd,
@@ -32,12 +31,14 @@ addPostFormValidator.enableValidation();
 const editProfileFormValidator = new FormValidator(formValidationConfig, editProfileForm);
 editProfileFormValidator.enableValidation();
 
-// функция создания карточки из класса(без публикации)
-function makeCardFromClass(item) {
- return new Card(item, '#card-templete', handleCardClick);
-}
+//UserInfo
+const dataElements = {
+  name: profileName,
+  job: profileJob }
+const userData = new UserInfo( dataElements );
 
-// стартовый набор карточек из массива на стр при загрузке, исполним функцию сразу
+
+// СТАРТОВЫЙ НАБОР КАРТОЧЕК
 const cardsOnPage = new Section( {
   items: initialCards,
   renderer:(item) => {
@@ -46,7 +47,13 @@ const cardsOnPage = new Section( {
   },
 }, cardContainerSelector);
 
+// функция создания карточки из класса(без публикации)
+function makeCardFromClass(item) {
+  return new Card(item, '#card-templete', handleCardClick);
+ }
+
 cardsOnPage.renderItems();
+
 
 // POPUP ADD
 const addPostPopup = new PopupWithForm (
@@ -56,19 +63,16 @@ const addPostPopup = new PopupWithForm (
    cardsOnPage.addItem(makeCardFromClass(item).createCard());
   }); //функция сабмита для POPUP ADD
 
-// Нажать на кнопку Add -> откроется попап добавления поста
-buttonOpenPopupAdd.addEventListener('click', () => {
-  addPostPopup.openPopup();
-  addPostFormValidator.disableSubmitButton();
-});
-
 addPostPopup.setEventListeners();
 
-//UserInfo
-const dataElements = {
-  name: profileName,
-  job: profileJob }
-const userData = new UserInfo( dataElements );
+// Нажать на кнопку Add -> откроется попап добавления поста
+function prepareAddPopup () {
+  addPostPopup.openPopup();
+  addPostFormValidator.disableSubmitButton();
+  addPostFormValidator.cleanErrorsOnOpen();
+}
+
+buttonOpenPopupAdd.addEventListener('click', prepareAddPopup);
 
 
 // POPUP EDIT
@@ -79,19 +83,25 @@ const editProfilePopup = new PopupWithForm(
     editProfilePopup.closePopup();
   });
 
-buttonOpenPopupEdit.addEventListener('click', () => {
-    nameInput.value = userData.getUserInfo().name;
-    jobInput.value = userData.getUserInfo().job;
-    editProfilePopup.openPopup();
-    editProfileFormValidator.cleanErrorsOnOpen();
-  });
-  editProfilePopup.setEventListeners();
+editProfilePopup.setEventListeners();
+
+function prepareEditPopup() {
+  const data = userData.getUserInfo();
+  nameInput.value = data.name;
+  jobInput.value = data.job;
+  editProfilePopup.openPopup();
+  editProfileFormValidator.cleanErrorsOnOpen();
+}
+
+buttonOpenPopupEdit.addEventListener('click', prepareEditPopup);
+
 
 // POPUP PREVIEW PIC
 const popupPreview = new PopupWithImage('.popup_show_picture');
 function handleCardClick(title, link) {
   popupPreview.openPopup(title, link);
 }
+
 popupPreview.setEventListeners();
 
 

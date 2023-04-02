@@ -8,7 +8,7 @@ class FormValidator {
     this._spanErrorList = Array.from(document.querySelectorAll(validationConfig.spanErrorSelector));
 
     this._formElement = formElement;
-    this._formButton = formElement.querySelector('.popup__save-button_add');
+    this._formButton = formElement.querySelector(this._buttonSelector);
     this._inputElList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
 
   }
@@ -63,7 +63,7 @@ class FormValidator {
   }
 
   disableSubmitButton() {
-    this._formButton.classList.add(this._buttonDisabledClass);
+    this._toggleButton();
     this._formButton.disabled = true;
   }
 
