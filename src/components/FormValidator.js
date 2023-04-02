@@ -10,6 +10,7 @@ class FormValidator {
     this._formElement = formElement;
     this._formButton = formElement.querySelector(this._buttonSelector);
     this._inputElList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._inputEl = this._formElement.querySelector(this._inputSelector);
 
   }
 
@@ -50,8 +51,8 @@ class FormValidator {
     const errorElement = document.querySelector(`#${inputID}-error`);
 
     if (input.validity.valid) {
-      input.classList.remove(this._errorClass);
-      errorElement.textContent = '';
+      this._clean(errorElement);
+      this._clean(input);
     } else {
       input.classList.add(this._errorClass);
       errorElement.textContent = input.validationMessage;
@@ -67,13 +68,17 @@ class FormValidator {
     this._formButton.disabled = true;
   }
 
+  _clean(item) {
+    item.textContent = '';
+    item.classList.remove(this._errorClass);
+  }
+
   cleanErrorsOnOpen() {
-    this._spanErrorList.forEach((span) => {
-      span.textContent = '';
+    this._spanErrorList.forEach((item) => {
+      this._clean(item);
     });
     this._inputElList.forEach((input) => {
-      input.classList.remove(this._errorClass);
-      });
+      this._clean(input)});
   }
 }
 
