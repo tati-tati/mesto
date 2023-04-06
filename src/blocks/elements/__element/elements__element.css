@@ -6,6 +6,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  height: fit-content;
+  max-height: 361px;
   position: relative;
 }
