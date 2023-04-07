@@ -14,6 +14,7 @@ class Api {
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
+      method: "GET",
       headers: this._headers
     })
 
@@ -22,6 +23,7 @@ class Api {
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/user/me`, {
+      method: "GET",
       headers: this._headers
     })
 
@@ -60,10 +62,7 @@ class Api {
       method: 'POST',
       headers: this._headers,
 
-      body: JSON.stringify({
-      name: item.name,
-      link: item.link
-      })
+      body: JSON.stringify(item)
     })
   }
 

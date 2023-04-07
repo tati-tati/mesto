@@ -42,8 +42,30 @@ editAvatarFormValidator.enableValidation();
 
 //подключаю API
 const api = new Api(apiConfig);
-console.log(api.getInitialCards())
+
+const cardsOnPage = new Section({
+  renderer: (item) => {
+  const card = makeCardFromClass(item).createCard();
+  cardsOnPage.addItem(card);
+  }
+}, cardContainerSelector);
+
 api.getInitialCards()
+  .then((item) => {
+    cardsOnPage.renderItems(item);
+    })
+
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    })
+
+// const cardsOnPage = new Section( {
+//   items: api.getInitialCards()
+//   .then(item) => {
+//   const card = makeCardFromClass(item).createCard();
+//   cardsOnPage.addItem(card);
+//   },
+// }, cardContainerSelector);
 
 //UserInfo
 const dataElements = {
@@ -51,21 +73,20 @@ const dataElements = {
   job: profileJob }
 const userData = new UserInfo( dataElements );
 
-// СТАРТОВЫЙ НАБОР КАРТОЧЕК
-const cardsOnPage = new Section( {
-  items: initialCards,
-  renderer:(item) => {
-  const card = makeCardFromClass(item).createCard();
-  cardsOnPage.addItem(card);
-  },
-}, cardContainerSelector);
+// // СТАРТОВЫЙ НАБОР КАРТОЧЕК
+// const cardsOnPage = new Section( {
+//   items: initialCards,
+//   renderer:(item) => {
+//   const card = makeCardFromClass(item).createCard();
+//   cardsOnPage.addItem(card);
+//   },
+// }, cardContainerSelector);
 
 // функция создания карточки из класса(без публикации)
 function makeCardFromClass(item) {
   return new Card(item, '#card-templete', handleCardClick);
  }
 
-cardsOnPage.renderItems();
 
 
 // POPUP ADD
@@ -73,7 +94,16 @@ const addPostPopup = new PopupWithForm (
   popupAddCard,
    (item) => {
    addPostPopup.closePopup();
-   cardsOnPage.addItem(makeCardFromClass(item).createCard());
+  return api.addNewCard(item)
+    .then(() => {
+     console.log(item);
+
+     cardsOnPage.addItem(makeCardFromClass(item).createCard())}
+    )
+
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    });
   }); //функция сабмита для POPUP ADD
 
 addPostPopup.setEventListeners();
@@ -93,6 +123,7 @@ const editProfilePopup = new PopupWithForm(
   popupEditProfile,
   (collectedData) => {
     userData.setUserInfo(collectedData);
+    
     editProfilePopup.closePopup();
   });
 
@@ -126,6 +157,7 @@ buttonOpenPopupAvatarEdit.addEventListener('click', handleAvatarEditPopup)
 
 // POPUP PREVIEW PIC
 const popupPreview = new PopupWithImage('.popup_show_picture');
+
 function handleCardClick(title, link) {
   popupPreview.openPopup(title, link);
 }
