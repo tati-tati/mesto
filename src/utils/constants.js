@@ -3,15 +3,19 @@ const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');
 const buttonOpenPopupAdd = document.querySelector('.profile__add-button');
 // const buttonSaveInPopupAdd = document.querySelector('.popup__save-button_add');
 const buttonCloseList = document.querySelectorAll('.popup__close-button');
+const buttonOpenPopupAvatarEdit = document.querySelector('.profile__avatar-button')
 
 //попапы
 const popupList = Array.from(document.querySelectorAll('.popup'));
 const popupEditProfile = '.popup_edit-profile';
 const popupAddCard = '.popup_add_picture';
+const popupEditAvatarSel = '.popup_edit_avatar';
 //форма из попапа Add
 const addPostForm = document.querySelector('.popup__form_post');
 //форма из попапа Edit
 const editProfileForm = document.querySelector('.popup__form_profile');
+const editAvatarForm = document.querySelector('.popup__form_edit_avatar');
+
 
 //инпуты для попапа Edit Profile
 const nameInput = document.querySelector('.popup__input_edit_name');
@@ -41,5 +45,8 @@ export {
   profileJob,
   titleInput,
   imgInput,
-  cardContainerSelector
+  cardContainerSelector,
+  popupEditAvatarSel,
+  buttonOpenPopupAvatarEdit,
+  editAvatarForm
 };

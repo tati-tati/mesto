@@ -10,6 +10,7 @@
   transition: opacity .15s ease-in-out;
   z-index: 1;
   width: 120px;
+  box-sizing: border-box;
 }
 
 .profile__avatar-button:hover {

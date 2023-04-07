@@ -4,6 +4,7 @@ import Card from '../components/Card.js';
 import Section from '../components/Section.js';
 import initialCards from '../utils/array-cards.js';
 import FormValidator from '../components/FormValidator.js';
+import Api from '../components/Api.js';
 import { formValidationConfig } from '../utils/validationConfig.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithImage from '../components/PopupWithImage.js';
@@ -19,7 +20,10 @@ import {
   jobInput,
   profileName,
   profileJob,
-  cardContainerSelector
+  cardContainerSelector,
+  popupEditAvatarSel,
+  buttonOpenPopupAvatarEdit,
+  editAvatarForm
 } from '../utils/constants.js';
 
 //ПРАЗДНИК
@@ -30,6 +34,9 @@ addPostFormValidator.enableValidation();
 
 const editProfileFormValidator = new FormValidator(formValidationConfig, editProfileForm);
 editProfileFormValidator.enableValidation();
+
+const editAvatarFormValidator = new FormValidator(formValidationConfig, editAvatarForm);
+editAvatarFormValidator.enableValidation();
 
 //UserInfo
 const dataElements = {
@@ -66,13 +73,13 @@ const addPostPopup = new PopupWithForm (
 addPostPopup.setEventListeners();
 
 // Нажать на кнопку Add -> откроется попап добавления поста
-function prepareAddPopup () {
+function handleAddPopup() {
   addPostPopup.openPopup();
   addPostFormValidator.disableSubmitButton();
   addPostFormValidator.cleanErrorsOnOpen();
 }
 
-buttonOpenPopupAdd.addEventListener('click', prepareAddPopup);
+buttonOpenPopupAdd.addEventListener('click', handleAddPopup);
 
 
 // POPUP EDIT
@@ -96,6 +103,21 @@ function prepareEditPopup() {
 buttonOpenPopupEdit.addEventListener('click', prepareEditPopup);
 
 
+// POPUP EDIT AVATAR
+const popupAvatarEdit = new PopupWithForm(popupEditAvatarSel,
+  () => {
+    popupAvatarEdit.closePopup();
+  });
+
+function handleAvatarEditPopup() {
+  popupAvatarEdit.openPopup();
+  editProfileFormValidator.cleanErrorsOnOpen();
+}
+
+popupAvatarEdit.setEventListeners();
+
+buttonOpenPopupAvatarEdit.addEventListener('click', handleAvatarEditPopup)
+
 // POPUP PREVIEW PIC
 const popupPreview = new PopupWithImage('.popup_show_picture');
 function handleCardClick(title, link) {
@@ -105,3 +127,13 @@ function handleCardClick(title, link) {
 popupPreview.setEventListeners();
 
 
+// API
+const api = new Api({
+  // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-62',
+  headers: {
+    // authorization: '2f88b489-99f5-491c-a88e-5aa5d9bc02d4',
+    'Content-Type': 'application/json'
+  }
+});
+
+api.getInitialCards()
