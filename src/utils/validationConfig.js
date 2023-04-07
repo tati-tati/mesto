@@ -1,4 +1,4 @@
-export const formValidationConfig = {
+const formValidationConfig = {
   formSelector: '.popup__form',
   inputSelector:'.popup__input',
   errorClass: 'popup__input_error',
@@ -6,3 +6,5 @@ export const formValidationConfig = {
   buttonDisabledClass: 'popup__save-button_state_disabled',
   spanErrorSelector: '.error'
 }
+
+export default formValidationConfig;

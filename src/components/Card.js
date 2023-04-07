@@ -1,7 +1,12 @@
 class Card {
+  // myID добавить
   constructor(item, templateSelector, handleCardClick) {
     this._name = item.name;
     this._link = item.link;
+    this._id = item._id;
+    this._likes = item.likes;
+    this._owner = item.owner;
+    // this._myID = myID;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
   }

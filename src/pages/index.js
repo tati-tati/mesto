@@ -1,14 +1,16 @@
 import './index.css';
-
+//классы
 import Card from '../components/Card.js';
 import Section from '../components/Section.js';
-import initialCards from '../utils/array-cards.js';
 import FormValidator from '../components/FormValidator.js';
 import Api from '../components/Api.js';
-import { formValidationConfig } from '../utils/validationConfig.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+//константы
+import apiConfig from '../utils/apiConfig.js';
+import formValidationConfig from '../utils/validationConfig.js';
+import initialCards from '../utils/array-cards.js';
 import {
   buttonOpenPopupEdit,
   buttonOpenPopupAdd,
@@ -28,7 +30,7 @@ import {
 
 //ПРАЗДНИК
 
-//включаем валидацию
+//включаю валидацию
 const addPostFormValidator = new FormValidator(formValidationConfig, addPostForm);
 addPostFormValidator.enableValidation();
 
@@ -38,12 +40,16 @@ editProfileFormValidator.enableValidation();
 const editAvatarFormValidator = new FormValidator(formValidationConfig, editAvatarForm);
 editAvatarFormValidator.enableValidation();
 
+//подключаю API
+const api = new Api(apiConfig);
+console.log(api.getInitialCards())
+api.getInitialCards()
+
 //UserInfo
 const dataElements = {
   name: profileName,
   job: profileJob }
 const userData = new UserInfo( dataElements );
-
 
 // СТАРТОВЫЙ НАБОР КАРТОЧЕК
 const cardsOnPage = new Section( {
@@ -127,13 +133,4 @@ function handleCardClick(title, link) {
 popupPreview.setEventListeners();
 
 
-// API
-const api = new Api({
-  // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-62',
-  headers: {
-    // authorization: '2f88b489-99f5-491c-a88e-5aa5d9bc02d4',
-    'Content-Type': 'application/json'
-  }
-});
 
-api.getInitialCards()
