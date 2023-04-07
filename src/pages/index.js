@@ -82,19 +82,29 @@ const userData = new UserInfo( dataElements );
 //   },
 // }, cardContainerSelector);
 
+
+
 // функция создания карточки из класса(без публикации)
 function makeCardFromClass(item) {
-  return new Card(item, '#card-templete', handleCardClick);
+  return new Card(item, '#card-templete', handleCardClick, handleCardDelete);
  }
 
-
+function handleCardDelete(item) {
+  return api.deleteCard(item)
+  .then((data) => {
+    alert('success', data.message)
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
+}
 
 // POPUP ADD
 const addPostPopup = new PopupWithForm (
   popupAddCard,
    (item) => {
    addPostPopup.closePopup();
-  return api.addNewCard(item)
+      return api.addNewCard(item)
     .then(() => {
      console.log(item);
 
@@ -123,7 +133,7 @@ const editProfilePopup = new PopupWithForm(
   popupEditProfile,
   (collectedData) => {
     userData.setUserInfo(collectedData);
-    
+
     editProfilePopup.closePopup();
   });
 
@@ -161,6 +171,8 @@ const popupPreview = new PopupWithImage('.popup_show_picture');
 function handleCardClick(title, link) {
   popupPreview.openPopup(title, link);
 }
+
+
 
 popupPreview.setEventListeners();
 

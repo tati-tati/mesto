@@ -1,6 +1,7 @@
+
 class Card {
   // myID добавить
-  constructor(item, templateSelector, handleCardClick) {
+  constructor(item, templateSelector, handleCardClick, handleCardDelete) {
     this._name = item.name;
     this._link = item.link;
     this._id = item._id;
@@ -9,6 +10,8 @@ class Card {
     // this._myID = myID;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._handleCardDelete = handleCardDelete;
+
   }
 
   _getTemplate() {
@@ -28,6 +31,11 @@ class Card {
   _removeCard (e) {
     e.target.closest('.elements__element').remove();
     e.stopPropagation();
+
+    this._handleCardDelete(this._id);
+
+
+    console.log(this._id)
   }
 
   createCard() {
@@ -45,7 +53,9 @@ class Card {
     //по клику на лайк в любой карточке сработает функция addLike
     this._element.querySelector('.elements__like-button').addEventListener('click', this._addLike);
     //по клику на мусорку на любой карточке сработает функция removeCard
-    this._element.querySelector('.elements__delete-button').addEventListener('click', this._removeCard);
+    this._element.querySelector('.elements__delete-button').addEventListener('click',(e) => {
+      this._removeCard(e);
+    });
     //по клику по картинке работет функция openPopupImgPreview открывается попап с большой картинкой
     this._element.addEventListener('click', () => {
       this._handleCardClick(this._name, this._link);
