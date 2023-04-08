@@ -1,7 +1,10 @@
 //кнопки
 const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');
 const buttonOpenPopupAdd = document.querySelector('.profile__add-button');
-// const buttonSaveInPopupAdd = document.querySelector('.popup__save-button_add');
+const buttonSaveInPopupAdd = document.querySelector('.popup__save-button_add');
+const buttonSaveInPopupEdit = document.querySelector('.popup__save-button_edit');
+const buttonSaveAvatar = document.querySelector('.popup__save-button_edit_avatar');
+
 const buttonCloseList = document.querySelectorAll('.popup__close-button');
 const buttonOpenPopupAvatarEdit = document.querySelector('.profile__avatar-button')
 
@@ -51,7 +54,9 @@ export {
   imgInput,
   cardContainerSelector,
   popupEditAvatarSel,
-
+  buttonSaveInPopupAdd,
   buttonOpenPopupAvatarEdit,
-  editAvatarForm
+  editAvatarForm,
+  buttonSaveInPopupEdit,
+  buttonSaveAvatar
 };

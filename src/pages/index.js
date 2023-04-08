@@ -27,7 +27,10 @@ import {
   profileAvatarEl,
   cardContainerSelector,
   buttonOpenPopupAvatarEdit,
-  editAvatarForm
+  editAvatarForm,
+  buttonSaveInPopupAdd,
+  buttonSaveInPopupEdit,
+  buttonSaveAvatar
 } from '../utils/constants.js';
 
 //ПРАЗДНИК
@@ -52,15 +55,17 @@ const cardsOnPage = new Section({
   }
 }, cardContainerSelector);
 
+// СТАРТОВЫЙ НАБОР КАРТОЧЕК
 api.getInitialCards()
   .then((item) => {
     cardsOnPage.renderItems(item);
-    })
+  })
 
-    .catch((err) => {
-      console.log(err); // выведем ошибку в консоль
-    })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  })
 
+// СТАРТОВЫЙ ВИД ПРОФИЛЯ
 api.getInfoUser()
   .then((data) => {
     userData.setUserInfo(data)
@@ -68,43 +73,24 @@ api.getInfoUser()
   .catch((err) => {
     console.log('не загрузилась информация в профиль на старте', err); // выведем ошибку в консоль
   });
-// const cardsOnPage = new Section( {
-//   items: api.getInitialCards()
-//   .then(item) => {
-//   const card = makeCardFromClass(item).createCard();
-//   cardsOnPage.addItem(card);
-//   },
-// }, cardContainerSelector);
 
-//UserInfo
+// UserInfo
 const dataElements = {
   name: profileName,
   about: profileJob,
   avatar: profileAvatarEl
 }
 
-console.log(profileAvatarEl)
 const userData = new UserInfo( dataElements );
 
-console.log('инфо о юзеpе', api.getInfoUser())
-
-// // СТАРТОВЫЙ НАБОР КАРТОЧЕК
-// const cardsOnPage = new Section( {
-//   items: initialCards,
-//   renderer:(item) => {
-//   const card = makeCardFromClass(item).createCard();
-//   cardsOnPage.addItem(card);
-//   },
-// }, cardContainerSelector);
-
-
+let myID; // для удаления своих карточек
 
 // функция создания карточки из класса(без публикации)
 function makeCardFromClass(item) {
   return new Card(item, '#card-templete', handleCardClick, handleCardDelete);
  }
 
-function handleCardDelete(item) {
+ function handleCardDelete(item) {
   return api.deleteCard(item)
   .then((data) => {
     alert('success', data.message)
@@ -118,16 +104,21 @@ function handleCardDelete(item) {
 const addPostPopup = new PopupWithForm (
   popupAddCard,
    (item) => {
-   addPostPopup.closePopup();
       return api.addNewCard(item)
 
       .then(() => {
-       cardsOnPage.addItem(makeCardFromClass(item).createCard())
+        buttonSaveInPopupAdd.textContent = 'Создание...';
+        cardsOnPage.addItem(makeCardFromClass(item).createCard())
       })
-
+      .then (() => {
+        addPostPopup.closePopup();
+      })
       .catch((err) => {
         console.log(err); // выведем ошибку в консоль
-      });
+      })
+      .finally(() => {
+        buttonSaveInPopupAdd.textContent = "Создать"
+      })
   }); //функция сабмита для POPUP ADD
 
 addPostPopup.setEventListeners();
@@ -146,9 +137,20 @@ buttonOpenPopupAdd.addEventListener('click', handleAddPopup);
 const editProfilePopup = new PopupWithForm(
   popupEditProfile,
   (collectedData) => {
-    userData.setUserInfo(collectedData);
-    api.patchUserInfo(collectedData);
-    editProfilePopup.closePopup();
+    api.patchUserInfo(collectedData)
+    .then ((collectedData)=> {
+      userData.setUserInfo(collectedData);
+      buttonSaveInPopupEdit.textContent = 'Сохранение...';
+    })
+    .then (() => {
+      editProfilePopup.closePopup();
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    })
+    .finally (() => {
+      buttonSaveInPopupEdit.textContent = 'Создание...';
+    })
   });
 
 editProfilePopup.setEventListeners();
@@ -167,11 +169,20 @@ buttonOpenPopupEdit.addEventListener('click', handleEditPopup);
 // POPUP EDIT AVATAR
 const popupAvatarEdit = new PopupWithForm(popupEditAvatarSel,
   (item) => {
-    profileAvatarEl.src = item.avatar;
-    popupAvatarEdit.closePopup();
-    api.patchUserAvatar(item);
-    console.log(api.patchUserAvatar(item));
-
+    api.patchUserAvatar(item)
+    .then((item) => {
+      buttonSaveAvatar.textContent = 'Сохранение...'
+      profileAvatarEl.src = item.avatar;
+    })
+    .then(() => {
+      popupAvatarEdit.closePopup();
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    })
+    .finally(() => {
+      popupAvatarEdit.textContent = 'Сохранить'
+    })
   });
 
 function handleAvatarEditPopup() {
@@ -200,3 +211,5 @@ const popupConfirmDelete = new PopupWithConfirmation(popupConfirmSel,
   () => {
 
   })
+
+  console.log(popupConfirmDelete)

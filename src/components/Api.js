@@ -86,13 +86,10 @@ class Api {
     console.log(cardId, `${this._baseUrl}/cards/${cardId}`)
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: this._headers
     })
     .then(this._handleResponse);
-
   }
-
-
 }
 
 export default Api;
