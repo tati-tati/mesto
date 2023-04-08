@@ -21,8 +21,8 @@ class Api {
     .then(this._handleResponse);
   }
 
-  getUserInfo() {
-    return fetch(`${this._baseUrl}/user/me`, {
+  getInfoUser() {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: this._headers
     })
@@ -31,26 +31,26 @@ class Api {
   }
 
   patchUserInfo(item) {
-    return fetch(`${this._baseUrl}/user/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
 
       body: JSON.stringify({
         name: item.name,
-        about: item.job
+        about: item.about,
       })
     })
 
     .then(this._handleResponse);
   }
 
-  patchUserAvatar(link) {
-    return fetch(`${this._baseUrl}/user/me/avatar`, {
+  patchUserAvatar(item) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
 
       body: JSON.stringify({
-        avatar: link
+        avatar: item.avatar
       })
     })
 
@@ -67,17 +67,19 @@ class Api {
   }
 
   addLike() {//Вместо cardId в URL нужно подставить свойство _id соответствующей карточки.
-    return fetch(`${this._baseUrl}/cards/cardId/likes`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: this._headers,
     })
+    .then(this._handleResponse);
   }
 
   deleteLike() {//Вместо cardId в URL нужно подставить свойство _id соответствующей карточки.
-    return fetch(`${this._baseUrl}/cards/cardId/likes`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this._headers,
     })
+    .then(this._handleResponse);
   }
 
   deleteCard(cardId) {

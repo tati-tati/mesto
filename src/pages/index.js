@@ -7,23 +7,25 @@ import Api from '../components/Api.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithConfirmation from '../components/PopupWithConfirmation.js';
 //константы
 import apiConfig from '../utils/apiConfig.js';
 import formValidationConfig from '../utils/validationConfig.js';
-import initialCards from '../utils/array-cards.js';
 import {
   buttonOpenPopupEdit,
   buttonOpenPopupAdd,
   popupEditProfile,
   popupAddCard,
+  popupConfirmSel,
+  popupEditAvatarSel,
   addPostForm,
   editProfileForm,
   nameInput,
   jobInput,
   profileName,
   profileJob,
+  profileAvatarEl,
   cardContainerSelector,
-  popupEditAvatarSel,
   buttonOpenPopupAvatarEdit,
   editAvatarForm
 } from '../utils/constants.js';
@@ -59,6 +61,13 @@ api.getInitialCards()
       console.log(err); // выведем ошибку в консоль
     })
 
+api.getInfoUser()
+  .then((data) => {
+    userData.setUserInfo(data)
+  })
+  .catch((err) => {
+    console.log('не загрузилась информация в профиль на старте', err); // выведем ошибку в консоль
+  });
 // const cardsOnPage = new Section( {
 //   items: api.getInitialCards()
 //   .then(item) => {
@@ -70,8 +79,14 @@ api.getInitialCards()
 //UserInfo
 const dataElements = {
   name: profileName,
-  job: profileJob }
+  about: profileJob,
+  avatar: profileAvatarEl
+}
+
+console.log(profileAvatarEl)
 const userData = new UserInfo( dataElements );
+
+console.log('инфо о юзеpе', api.getInfoUser())
 
 // // СТАРТОВЫЙ НАБОР КАРТОЧЕК
 // const cardsOnPage = new Section( {
@@ -105,15 +120,14 @@ const addPostPopup = new PopupWithForm (
    (item) => {
    addPostPopup.closePopup();
       return api.addNewCard(item)
-    .then(() => {
-     console.log(item);
 
-     cardsOnPage.addItem(makeCardFromClass(item).createCard())}
-    )
+      .then(() => {
+       cardsOnPage.addItem(makeCardFromClass(item).createCard())
+      })
 
-    .catch((err) => {
-      console.log(err); // выведем ошибку в консоль
-    });
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
   }); //функция сабмита для POPUP ADD
 
 addPostPopup.setEventListeners();
@@ -133,27 +147,31 @@ const editProfilePopup = new PopupWithForm(
   popupEditProfile,
   (collectedData) => {
     userData.setUserInfo(collectedData);
-
+    api.patchUserInfo(collectedData);
     editProfilePopup.closePopup();
   });
 
 editProfilePopup.setEventListeners();
 
-function prepareEditPopup() {
+function handleEditPopup() {
   const data = userData.getUserInfo();
   nameInput.value = data.name;
-  jobInput.value = data.job;
+  jobInput.value = data.about;
   editProfilePopup.openPopup();
   editProfileFormValidator.cleanErrorsOnOpen();
 }
 
-buttonOpenPopupEdit.addEventListener('click', prepareEditPopup);
+buttonOpenPopupEdit.addEventListener('click', handleEditPopup);
 
 
 // POPUP EDIT AVATAR
 const popupAvatarEdit = new PopupWithForm(popupEditAvatarSel,
-  () => {
+  (item) => {
+    profileAvatarEl.src = item.avatar;
     popupAvatarEdit.closePopup();
+    api.patchUserAvatar(item);
+    console.log(api.patchUserAvatar(item));
+
   });
 
 function handleAvatarEditPopup() {
@@ -176,5 +194,9 @@ function handleCardClick(title, link) {
 
 popupPreview.setEventListeners();
 
+// POPUP CONFIRM
 
+const popupConfirmDelete = new PopupWithConfirmation(popupConfirmSel,
+  () => {
 
+  })

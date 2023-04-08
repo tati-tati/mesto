@@ -10,6 +10,7 @@ const popupList = Array.from(document.querySelectorAll('.popup'));
 const popupEditProfile = '.popup_edit-profile';
 const popupAddCard = '.popup_add_picture';
 const popupEditAvatarSel = '.popup_edit_avatar';
+const popupConfirmSel = '.popup_edit-confirm';
 //форма из попапа Add
 const addPostForm = document.querySelector('.popup__form_post');
 //форма из попапа Edit
@@ -23,6 +24,7 @@ const jobInput = document.querySelector('.popup__input_edit_job');
 //поля для исполнения инпутов на стр из Edit Profile
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__description');
+const profileAvatarEl = document.querySelector('.profile__avatar');
 
 //инпуты для попапа Add
 const titleInput = document.querySelector('.popup__input_edit_title');
@@ -37,16 +39,19 @@ export {
   popupList,
   popupEditProfile,
   popupAddCard,
+  popupConfirmSel,
   addPostForm,
   editProfileForm,
   nameInput,
   jobInput,
   profileName,
   profileJob,
+  profileAvatarEl,
   titleInput,
   imgInput,
   cardContainerSelector,
   popupEditAvatarSel,
+
   buttonOpenPopupAvatarEdit,
   editAvatarForm
 };
