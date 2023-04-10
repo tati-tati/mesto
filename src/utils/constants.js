@@ -19,6 +19,7 @@ const addPostForm = document.querySelector('.popup__form_post');
 //форма из попапа Edit
 const editProfileForm = document.querySelector('.popup__form_profile');
 const editAvatarForm = document.querySelector('.popup__form_edit_avatar');
+const confirmDeleteForm = document.querySelector('.popup__form_confirm');
 
 
 //инпуты для попапа Edit Profile
@@ -58,5 +59,6 @@ export {
   buttonOpenPopupAvatarEdit,
   editAvatarForm,
   buttonSaveInPopupEdit,
-  buttonSaveAvatar
+  buttonSaveAvatar,
+  confirmDeleteForm
 };

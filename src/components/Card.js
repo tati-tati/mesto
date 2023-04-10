@@ -1,17 +1,19 @@
 
 class Card {
   // myID добавить
-  constructor(item, templateSelector, handleCardClick, handleCardDelete) {
+  constructor(item, myID, templateSelector, handleCardClick, handleCardDelete) {
     this._name = item.name;
     this._link = item.link;
     this._id = item._id;
     this._likes = item.likes;
     this._owner = item.owner;
-    // this._myID = myID;
+    this._myID = myID; //let без присвоения
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._handleCardDelete = handleCardDelete;
 
+    this._isOwner = item.owner._id === this._myID
+  //  console.log(this._id, this._isOwner, this._myID, myID, 'из конструктора')
   }
 
   _getTemplate() {
@@ -28,14 +30,13 @@ class Card {
     e.stopPropagation();
   }
 
-  _removeCard (e) {
-    e.target.closest('.elements__element').remove();
-    e.stopPropagation();
+  removeCard () {
+    this._element.remove();
+    this._element = null;
+    // e.target.closest('.elements__element').remove();
 
-    this._handleCardDelete(this._id);
 
-
-    console.log(this._id)
+    // console.log(this._id)
   }
 
   createCard() {
@@ -46,7 +47,14 @@ class Card {
     this._element.querySelector('.elements__title').textContent = this._name;
     newCardImg.alt = this._name;
     this._setEventListeners();
+    this._renderDeleteButton();
     return this._element;
+  }
+
+  _renderDeleteButton() {
+    if (!this._isOwner) {
+      this._element.querySelector('.elements__delete-button').style.display = 'none';
+    }
   }
 
   _setEventListeners() {
@@ -54,12 +62,55 @@ class Card {
     this._element.querySelector('.elements__like-button').addEventListener('click', this._addLike);
     //по клику на мусорку на любой карточке сработает функция removeCard
     this._element.querySelector('.elements__delete-button').addEventListener('click',(e) => {
-      this._removeCard(e);
+      this._handleCardDelete(e, this._id, this._item, this._element);
     });
     //по клику по картинке работет функция openPopupImgPreview открывается попап с большой картинкой
     this._element.addEventListener('click', () => {
       this._handleCardClick(this._name, this._link);
     });
+  }
+
+  _toggleAddLike() {
+    this._likeButton.classList.add('post__like-btn_pushed');
+  }
+
+  _toggleDeleteLike() {
+    this._likeButton.classList.remove('post__like-btn_pushed');
+  }
+
+  _isLiked() {
+    if (this._currentUserLike()) {
+      this._toggleAddLike();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  _currentUserLike() {
+    return this._likes.some(like => like._id === this._userId);
+  }
+
+  _likeCard() {
+    if (!this._isLiked()) {
+      this._handleAddLike(this._id, this._likeButton)
+        .then((item) => {
+          this._likes = item.likes;
+          this._toggleAddLike();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    } else {
+      this._handleDeleteLike(this._id, this._likeButton)
+        .then((item) => {
+          this._likes = item.likes;
+          this._toggleDeleteLike();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
   }
 }
 

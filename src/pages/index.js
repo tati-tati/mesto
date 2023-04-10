@@ -30,7 +30,8 @@ import {
   editAvatarForm,
   buttonSaveInPopupAdd,
   buttonSaveInPopupEdit,
-  buttonSaveAvatar
+  buttonSaveAvatar,
+  confirmDeleteForm
 } from '../utils/constants.js';
 
 //ПРАЗДНИК
@@ -48,31 +49,18 @@ editAvatarFormValidator.enableValidation();
 //подключаю API
 const api = new Api(apiConfig);
 
-const cardsOnPage = new Section({
-  renderer: (item) => {
-  const card = makeCardFromClass(item).createCard();
-  cardsOnPage.addItem(card);
-  }
-}, cardContainerSelector);
+// СТАРТОВЫЙ НАБОР КАРТОЧЕК и данные на стр
+let myID;
 
-// СТАРТОВЫЙ НАБОР КАРТОЧЕК
-api.getInitialCards()
-  .then((item) => {
+Promise.all([api.getInfoUser(), api.getInitialCards()])
+  .then(([data, item]) => {
+    userData.setUserInfo(data);
+    myID = data._id;
     cardsOnPage.renderItems(item);
   })
-
   .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
+    alert(`Страница недоступна, ошибка - ${(err)}`);
   })
-
-// СТАРТОВЫЙ ВИД ПРОФИЛЯ
-api.getInfoUser()
-  .then((data) => {
-    userData.setUserInfo(data)
-  })
-  .catch((err) => {
-    console.log('не загрузилась информация в профиль на старте', err); // выведем ошибку в консоль
-  });
 
 // UserInfo
 const dataElements = {
@@ -83,32 +71,55 @@ const dataElements = {
 
 const userData = new UserInfo( dataElements );
 
-let myID; // для удаления своих карточек
+const cardsOnPage = new Section({
+  renderer: (item) => {
+  const card = makeCardFromClass(item, myID).createCard();
+  cardsOnPage.addItem(card);
+  }
+}, cardContainerSelector);
+
 
 // функция создания карточки из класса(без публикации)
-function makeCardFromClass(item) {
-  return new Card(item, '#card-templete', handleCardClick, handleCardDelete);
+function makeCardFromClass(item, id) {
+  // console.log('значение из функции мейк кард', myID)
+  return new Card(
+    item,
+    id,
+    '#card-templete',
+    handleCardClick,
+    handleCardDelete);
  }
 
- function handleCardDelete(item) {
-  return api.deleteCard(item)
-  .then((data) => {
-    alert('success', data.message)
-  })
-  .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  });
+ function handleCardDelete(e, id, item, element) {
+  e.stopPropagation();
+  console.log(item)
+  const popupConfirmDelete = new PopupWithConfirmation(popupConfirmSel,
+    (item, element) => {
+      return api.deleteCard(item)
+      .then(() => {
+        popupConfirmDelete.closePopup();
+        element.remove();
+
+        alert('success', data.message)
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
+    }, confirmDeleteForm)
+    popupConfirmDelete.openPopup(element);
+    popupConfirmDelete.setEventListeners();
 }
 
 // POPUP ADD
 const addPostPopup = new PopupWithForm (
   popupAddCard,
-   (item) => {
+   (item, myID) => {
+      // myID = api.getInfoUser()._id
       return api.addNewCard(item)
-
       .then(() => {
         buttonSaveInPopupAdd.textContent = 'Создание...';
-        cardsOnPage.addItem(makeCardFromClass(item).createCard())
+        // console.log('id значение в создании карточки',myID)
+        cardsOnPage.addItem(makeCardFromClass(item, myID).createCard())
       })
       .then (() => {
         addPostPopup.closePopup();
@@ -138,7 +149,7 @@ const editProfilePopup = new PopupWithForm(
   popupEditProfile,
   (collectedData) => {
     api.patchUserInfo(collectedData)
-    .then ((collectedData)=> {
+    .then ((collectedData) => {
       userData.setUserInfo(collectedData);
       buttonSaveInPopupEdit.textContent = 'Сохранение...';
     })
@@ -207,9 +218,17 @@ popupPreview.setEventListeners();
 
 // POPUP CONFIRM
 
-const popupConfirmDelete = new PopupWithConfirmation(popupConfirmSel,
-  () => {
+// const popupConfirmDelete = new PopupWithConfirmation(popupConfirmSel,
+//   (e) => {
+//     return api.deleteCard(item)
+//     .then((e) => {
+//       popupConfirmDelete.closePopup();
+//       e.target.closest('.elements__element').remove();
 
-  })
+//       // alert('success', data.message)
+//     })
+//     .catch((err) => {
+//       console.log(err); // выведем ошибку в консоль
+//     });
+//   }, confirmDeleteForm)
 
-  console.log(popupConfirmDelete)

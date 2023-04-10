@@ -74,6 +74,14 @@ class Api {
     .then(this._handleResponse);
   }
 
+  getCurrentUser() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "GET",
+      headers: this._headers,
+    })
+    .then(this._handleResponse);
+  }
+
   deleteLike() {//Вместо cardId в URL нужно подставить свойство _id соответствующей карточки.
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
@@ -83,7 +91,7 @@ class Api {
   }
 
   deleteCard(cardId) {
-    console.log(cardId, `${this._baseUrl}/cards/${cardId}`)
+    // console.log(cardId, `${this._baseUrl}/cards/${cardId}`)
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers

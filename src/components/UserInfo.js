@@ -9,7 +9,7 @@ export default class UserInfo {
     const userInfo = {
       name: this._nameProfile.textContent,
       about: this._jobProfile.textContent,
-      avatar: this._avatar.src
+      avatar: this._avatar.src,
     }
     return userInfo;
   }
