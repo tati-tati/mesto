@@ -66,8 +66,8 @@ class Api {
     })
   }
 
-  addLike() {//Вместо cardId в URL нужно подставить свойство _id соответствующей карточки.
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+  addLike(id) {//Вместо cardId в URL нужно подставить свойство _id соответствующей карточки.
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
       headers: this._headers,
     })
@@ -82,8 +82,8 @@ class Api {
     .then(this._handleResponse);
   }
 
-  deleteLike() {//Вместо cardId в URL нужно подставить свойство _id соответствующей карточки.
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+  deleteLike(id) {//Вместо cardId в URL нужно подставить свойство _id соответствующей карточки.
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
       headers: this._headers,
     })

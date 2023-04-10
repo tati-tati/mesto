@@ -1,7 +1,7 @@
 
 class Card {
   // myID добавить
-  constructor(item, myID, templateSelector, handleCardClick, handleCardDelete) {
+  constructor(item, myID, templateSelector, handleCardClick, handleCardDelete, handleAddLike, handleDeleteLike) {
     this._name = item.name;
     this._link = item.link;
     this._id = item._id;
@@ -11,24 +11,23 @@ class Card {
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._handleCardDelete = handleCardDelete;
+    this._handleAddLike = handleAddLike;
+    this._handleDeleteLike = handleDeleteLike;
+
+    this._templete = document.querySelector(this._templateSelector).content.querySelector('.elements__element').cloneNode(true)
+    this._likeButton = this._templete.querySelector('.elements__like-button');
+    this._likeNumber = this._templete.querySelector('.elements__like-number');
 
     this._isOwner = item.owner._id === this._myID
   //  console.log(this._id, this._isOwner, this._myID, myID, 'из конструктора')
   }
 
-  _getTemplate() {
-    const cardElement = document
-    .querySelector(this._templateSelector)
-    .content
-    .querySelector('.elements__element')
-    .cloneNode(true)
-    return cardElement;
-  }
 
-  _addLike(e) {
-    e.target.classList.toggle('elements__like-button_active');
-    e.stopPropagation();
-  }
+
+  // _addLike(e) {
+  //   e.target.classList.toggle('elements__like-button_active');
+  //   e.stopPropagation();
+  // }
 
   removeCard () {
     this._element.remove();
@@ -40,12 +39,13 @@ class Card {
   }
 
   createCard() {
-    this._element = this._getTemplate();
+    this._element = this._templete;
     const newCardImg =  this._element.querySelector('.elements__image');
     newCardImg.src = this._link;
     //переменная для подписи в шаблоне = источник, добавляем значение в тег атрибут alt
     this._element.querySelector('.elements__title').textContent = this._name;
     newCardImg.alt = this._name;
+    this._element.querySelector('.elements__like-number').textContent = this._likes.length;
     this._setEventListeners();
     this._renderDeleteButton();
     return this._element;
@@ -59,7 +59,9 @@ class Card {
 
   _setEventListeners() {
     //по клику на лайк в любой карточке сработает функция addLike
-    this._element.querySelector('.elements__like-button').addEventListener('click', this._addLike);
+    this._element.querySelector('.elements__like-button').addEventListener('click',(e) => {
+      e.stopPropagation();
+      this._likeCard()});
     //по клику на мусорку на любой карточке сработает функция removeCard
     this._element.querySelector('.elements__delete-button').addEventListener('click',(e) => {
       this._handleCardDelete(e, this._id, this._item, this._element);
@@ -70,17 +72,17 @@ class Card {
     });
   }
 
-  _toggleAddLike() {
-    this._likeButton.classList.add('post__like-btn_pushed');
+  _addLike() {
+    this._likeButton.classList.add('elements__like-button_active');
   }
 
-  _toggleDeleteLike() {
-    this._likeButton.classList.remove('post__like-btn_pushed');
+  _deleteLike() {
+    this._likeButton.classList.remove('elements__like-button_active');
   }
 
   _isLiked() {
     if (this._currentUserLike()) {
-      this._toggleAddLike();
+      this._addLike();
       return true;
     } else {
       return false;
@@ -88,24 +90,24 @@ class Card {
   }
 
   _currentUserLike() {
-    return this._likes.some(like => like._id === this._userId);
+    return this._likes.some(like => like._id === this._myID);
   }
 
   _likeCard() {
     if (!this._isLiked()) {
-      this._handleAddLike(this._id, this._likeButton)
+      this._handleAddLike(this._id, this._likeNumber)
         .then((item) => {
           this._likes = item.likes;
-          this._toggleAddLike();
+          this._addLike();
         })
         .catch((err) => {
           console.log(err);
         })
     } else {
-      this._handleDeleteLike(this._id, this._likeButton)
+      this._handleDeleteLike(this._id, this._likeNumber)
         .then((item) => {
           this._likes = item.likes;
-          this._toggleDeleteLike();
+          this._deleteLike();
         })
         .catch((err) => {
           console.log(err);

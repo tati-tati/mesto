@@ -87,7 +87,10 @@ function makeCardFromClass(item, id) {
     id,
     '#card-templete',
     handleCardClick,
-    handleCardDelete);
+    handleCardDelete,
+    handleAddLike,
+    handleDeleteLike
+    );
  }
 
  function handleCardDelete(e, id, item, element) {
@@ -232,3 +235,24 @@ popupPreview.setEventListeners();
 //     });
 //   }, confirmDeleteForm)
 
+function handleAddLike (id, number) {
+  return api.addLike(id)
+    .then((item) => {
+      number.textContent = item.likes.length;
+      return item;
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
+
+function handleDeleteLike (id, number) {
+  return api.deleteLike(id)
+    .then((item) => {
+      number.textContent = item.likes.length;
+      return item;
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
