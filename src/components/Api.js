@@ -64,6 +64,7 @@ class Api {
 
       body: JSON.stringify(item)
     })
+    .then(this._handleResponse);
   }
 
   addLike(id) {//Вместо cardId в URL нужно подставить свойство _id соответствующей карточки.

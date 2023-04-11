@@ -29,10 +29,11 @@ class Card {
   //   e.stopPropagation();
   // }
 
-  removeCard () {
-    this._element.remove();
-    this._element = null;
+  removeCard() {
+    // this._element.remove();
+    // this._element = null;
     // e.target.closest('.elements__element').remove();
+    this._handleCardDelete(this._id, this._element);
 
 
     // console.log(this._id)
@@ -40,14 +41,15 @@ class Card {
 
   createCard() {
     this._element = this._templete;
-    const newCardImg =  this._element.querySelector('.elements__image');
-    newCardImg.src = this._link;
+    this._newCardImg =  this._element.querySelector('.elements__image');
+    this._newCardImg.src = this._link;
     //переменная для подписи в шаблоне = источник, добавляем значение в тег атрибут alt
     this._element.querySelector('.elements__title').textContent = this._name;
-    newCardImg.alt = this._name;
+    this._newCardImg.alt = this._name;
     this._element.querySelector('.elements__like-number').textContent = this._likes.length;
     this._setEventListeners();
     this._renderDeleteButton();
+    this._isLiked();
     return this._element;
   }
 
@@ -63,11 +65,10 @@ class Card {
       e.stopPropagation();
       this._likeCard()});
     //по клику на мусорку на любой карточке сработает функция removeCard
-    this._element.querySelector('.elements__delete-button').addEventListener('click',(e) => {
-      this._handleCardDelete(e, this._id, this._item, this._element);
-    });
+    this._element.querySelector('.elements__delete-button').addEventListener('click',() => {
+      this.removeCard()});
     //по клику по картинке работет функция openPopupImgPreview открывается попап с большой картинкой
-    this._element.addEventListener('click', () => {
+    this._newCardImg.addEventListener('click', () => {
       this._handleCardClick(this._name, this._link);
     });
   }

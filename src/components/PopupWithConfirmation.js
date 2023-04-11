@@ -7,18 +7,17 @@ class PopupWithConfirmation extends Popup {
     this._form = confirmDeleteForm;
   }
 
-  openPopup(element) {
+  openPopup(id, element) {
     super.openPopup();
     this._element = element;
+    this._id = id;
   }
 
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      this.closePopup();
-      this._submitAddForm();
-      this._element.remove();
+      this._submitAddForm(this._id, this._element);
     });
   }
 }
