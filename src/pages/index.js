@@ -87,8 +87,7 @@ function makeCardFromClass(item, id) {
     '#card-templete',
     handleCardClick,
     handleCardDelete,
-    handleAddLike,
-    handleDeleteLike
+    handleAddLike
     ).createCard();
  }
 
@@ -127,7 +126,7 @@ function handleCardSubmit(item) {
 }
 
 const addPostPopup = new PopupWithForm (
-  popupAddCard,handleCardSubmit); //функция сабмита для POPUP ADD
+  popupAddCard, handleCardSubmit); //функция сабмита для POPUP ADD
 
 addPostPopup.setEventListeners();
 
@@ -230,32 +229,26 @@ popupPreview.setEventListeners();
 //     });
 //   }, confirmDeleteForm)
 
-function handleAddLike (id) {
-    return api.addLike(id)
-    // .then((item) => {
-    //   number.textContent = item.likes.length;
-    //   return item;
-    // })
-    .then((item) => {
-      // console.log('handleAddLike')
-      return item;
+function handleAddLike (id, status, card) {
+  // console.log(id, status, card)
+  if (!status) {
+     api.addLike(id)
+    .then((res) => {
+     card.changeLikeCounter(res.likes.length)
+     card.addLike();
     })
     .catch((err) => {
       console.log(err);
     })
+  } else {
+    api.deleteLike(id)
+    .then((res) => {
+      card.changeLikeCounter(res.likes.length)
+      card.deleteLike();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
 }
 
-function handleDeleteLike (id) {
-    return api.deleteLike(id)
-    // .then((item) => {
-    //   number.textContent = item.likes.length;
-    //   return item;
-    // })
-    .then((item) => {
-      // console.log('handleDeleteLike')
-      return item;
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-}

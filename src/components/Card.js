@@ -1,7 +1,7 @@
 
 class Card {
   // myID добавить
-  constructor(item, myID, templateSelector, handleCardClick, handleCardDelete, handleAddLike, handleDeleteLike) {
+  constructor(item, myID, templateSelector, handleCardClick, handleCardDelete, handleAddLike) {
     this._name = item.name;
     this._link = item.link;
     this._id = item._id;
@@ -12,7 +12,6 @@ class Card {
     this._handleCardClick = handleCardClick;
     this._handleCardDelete = handleCardDelete;
     this._handleAddLike = handleAddLike;
-    this._handleDeleteLike = handleDeleteLike;
 
     this._templete = document.querySelector(this._templateSelector).content.querySelector('.elements__element').cloneNode(true)
     this._likeButton = this._templete.querySelector('.elements__like-button');
@@ -36,7 +35,7 @@ class Card {
     this._element.querySelector('.elements__like-number').textContent = this._likes.length;
     this._setEventListeners();
     this._renderDeleteButton();
-    this._isLiked();
+    this._cardIsLiked = this._isLiked();
     return this._element;
   }
 
@@ -60,17 +59,17 @@ class Card {
     });
   }
 
-  _addLike() {
+  addLike() {
     this._likeButton.classList.add('elements__like-button_active');
   }
 
-  _deleteLike() {
+  deleteLike() {
     this._likeButton.classList.remove('elements__like-button_active');
   }
 
   _isLiked() {
     if (this._currentUserLike()) {
-      this._addLike();
+      this.addLike();
       return true;
     } else {
       return false;
@@ -83,28 +82,13 @@ class Card {
   }
 
   _likeCard() {
-    if (!this._isLiked()) {
-      this._handleAddLike(this._id)
-      .then((item) => {//сначала получаем значение лайка, потом в версткуб иначе undefined
-        this._likeNumber.textContent = item.likes.length;
-        this._likes = item.likes;
-        this._addLike();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-    } else {
-      this._handleDeleteLike(this._id)
-      .then((item) => {
-        this._likeNumber.textContent = item.likes.length;
-        this._likes = item.likes;
-        this._deleteLike();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-    }
+    this._handleAddLike(this._id, this._cardIsLiked, this);
+    this._cardIsLiked = !this._cardIsLiked;
   }
-}
 
+  changeLikeCounter(count) {
+    this._likeNumber.textContent = count;
+  }
+
+}
 export default Card;
