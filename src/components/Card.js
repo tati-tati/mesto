@@ -22,21 +22,8 @@ class Card {
   //  console.log(this._id, this._isOwner, this._myID, myID, 'из конструктора')
   }
 
-
-
-  // _addLike(e) {
-  //   e.target.classList.toggle('elements__like-button_active');
-  //   e.stopPropagation();
-  // }
-
   removeCard() {
-    // this._element.remove();
-    // this._element = null;
-    // e.target.closest('.elements__element').remove();
     this._handleCardDelete(this._id, this._element);
-
-
-    // console.log(this._id)
   }
 
   createCard() {
@@ -55,14 +42,14 @@ class Card {
 
   _renderDeleteButton() {
     if (!this._isOwner) {
-      this._element.querySelector('.elements__delete-button').style.display = 'none';
+      this._element.querySelector('.elements__delete-button').remove();
     }
   }
 
   _setEventListeners() {
     //по клику на лайк в любой карточке сработает функция addLike
-    this._element.querySelector('.elements__like-button').addEventListener('click',(e) => {
-      e.stopPropagation();
+    this._element.querySelector('.elements__like-button').addEventListener('click',() => {
+      // e.stopPropagation();
       this._likeCard()});
     //по клику на мусорку на любой карточке сработает функция removeCard
     this._element.querySelector('.elements__delete-button').addEventListener('click',() => {
@@ -96,23 +83,13 @@ class Card {
 
   _likeCard() {
     if (!this._isLiked()) {
-      this._handleAddLike(this._id, this._likeNumber)
-        .then((item) => {
-          this._likes = item.likes;
-          this._addLike();
-        })
-        .catch((err) => {
-          console.log(err);
-        })
+      console.log('из КАРД поставить лайк',this._handleAddLike(this._id))
+      this._likeNumber.textContent = this._handleAddLike(this._id);
+      this._addLike();
     } else {
-      this._handleDeleteLike(this._id, this._likeNumber)
-        .then((item) => {
-          this._likes = item.likes;
-          this._deleteLike();
-        })
-        .catch((err) => {
-          console.log(err);
-        })
+      console.log('из КАРД убрать лайк',this._handleAddLike(this._id))
+      this._likeNumber.textContent = this._handleDeleteLike(this._id);
+      this._deleteLike();
     }
   }
 }

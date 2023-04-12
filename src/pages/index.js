@@ -28,9 +28,9 @@ import {
   cardContainerSelector,
   buttonOpenPopupAvatarEdit,
   editAvatarForm,
-  buttonSaveInPopupAdd,
-  buttonSaveInPopupEdit,
-  buttonSaveAvatar,
+  // buttonSaveInPopupAdd,
+  // buttonSaveInPopupEdit,
+  // buttonSaveAvatar,
   confirmDeleteForm
 } from '../utils/constants.js';
 
@@ -72,7 +72,7 @@ const userData = new UserInfo( dataElements );
 
 const cardsOnPage = new Section({
   renderer: (item, id) => {
-  const card = makeCardFromClass(item, id).createCard();
+  const card = makeCardFromClass(item, id);
   cardsOnPage.addItem(card);
   }
 }, cardContainerSelector);
@@ -89,16 +89,14 @@ function makeCardFromClass(item, id) {
     handleCardDelete,
     handleAddLike,
     handleDeleteLike
-    );
+    ).createCard();
  }
 
  const popupConfirmDelete = new PopupWithConfirmation(popupConfirmSel,
-  (id, element) => {
+  (id) => {
     api.deleteCard(id)
     .then(() => {
       popupConfirmDelete.closePopup();
-      element.remove();
-
       // alert('success', data.message)
     })
     .catch((err) => {
@@ -107,27 +105,25 @@ function makeCardFromClass(item, id) {
   }, confirmDeleteForm)
 
  function handleCardDelete(id, element) {
-  console.log(id)
-
     popupConfirmDelete.openPopup(id ,element);
     popupConfirmDelete.setEventListeners();
 }
 
 // POPUP ADD
 function handleCardSubmit(item) {
-  buttonSaveInPopupAdd.textContent = 'Создание...';
+  // buttonSaveInPopupAdd.textContent = 'Создание...';
   api.addNewCard(item)
   .then((res) => {
-    console.log(res)
-    cardsOnPage.addItem(makeCardFromClass(res, userData.id).createCard())
+    // console.log(res)
+    cardsOnPage.addItem(makeCardFromClass(res, userData.id))
     addPostPopup.closePopup();
   })
   .catch((err) => {
     console.log(err); // выведем ошибку в консоль
   })
-  .finally(() => {
-    buttonSaveInPopupAdd.textContent = "Создать"
-  })
+  // .finally(() => {
+  //   buttonSaveInPopupAdd.textContent = "Создать"
+  // })
 }
 
 const addPostPopup = new PopupWithForm (
@@ -149,7 +145,7 @@ buttonOpenPopupAdd.addEventListener('click', handleAddPopup);
 const editProfilePopup = new PopupWithForm(
   popupEditProfile,
   (collectedData) => {
-    buttonSaveInPopupEdit.textContent = 'Сохранение...';
+    // buttonSaveInPopupEdit.textContent = 'Сохранение...';
     api.patchUserInfo(collectedData)
     .then ((collectedData) => {
       userData.setUserInfo(collectedData);
@@ -160,9 +156,9 @@ const editProfilePopup = new PopupWithForm(
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
-    .finally (() => {
-      buttonSaveInPopupEdit.textContent = 'Сохранить';
-    })
+    // .finally (() => {
+    //   buttonSaveInPopupEdit.textContent = 'Сохранить';
+    // })
   });
 
 editProfilePopup.setEventListeners();
@@ -181,10 +177,10 @@ buttonOpenPopupEdit.addEventListener('click', handleEditPopup);
 // POPUP EDIT AVATAR
 const popupAvatarEdit = new PopupWithForm(popupEditAvatarSel,
   (item) => {
-    buttonSaveAvatar.textContent = 'Сохранение...';
+    // buttonSaveAvatar.textContent = 'Сохранение...';
     api.patchUserAvatar(item)
     .then((item) => {
-      profileAvatarEl.src = item.avatar;
+      userData.setUserInfo(item);
     })
     .then(() => {
       popupAvatarEdit.closePopup();
@@ -192,9 +188,9 @@ const popupAvatarEdit = new PopupWithForm(popupEditAvatarSel,
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
-    .finally(() => {
-      buttonSaveAvatar.textContent = 'Сохранить'
-    })
+    // .finally(() => {
+    //   buttonSaveAvatar.textContent = 'Сохранить'
+    // })
   });
 
 function handleAvatarEditPopup() {
@@ -234,22 +230,29 @@ popupPreview.setEventListeners();
 //     });
 //   }, confirmDeleteForm)
 
-function handleAddLike (id, number) {
-  return api.addLike(id)
+function handleAddLike (id) {
+    api.addLike(id)
+    // .then((item) => {
+    //   number.textContent = item.likes.length;
+    //   return item;
+    // })
     .then((item) => {
-      number.textContent = item.likes.length;
-      return item;
+      console.log('handleAddLike', item.likes.length, item )
+      return item.likes.length;
     })
     .catch((err) => {
       console.log(err);
     })
 }
 
-function handleDeleteLike (id, number) {
-  return api.deleteLike(id)
+function handleDeleteLike (id) {
+    api.deleteLike(id)
+    // .then((item) => {
+    //   number.textContent = item.likes.length;
+    //   return item;
+    // })
     .then((item) => {
-      number.textContent = item.likes.length;
-      return item;
+      return item.likes.length;
     })
     .catch((err) => {
       console.log(err);
