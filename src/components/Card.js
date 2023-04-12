@@ -78,18 +78,31 @@ class Card {
   }
 
   _currentUserLike() {
+    // console.log(this._likes.some(like => like._id === this._myID))
     return this._likes.some(like => like._id === this._myID);
   }
 
   _likeCard() {
     if (!this._isLiked()) {
-      console.log('из КАРД поставить лайк',this._handleAddLike(this._id))
-      this._likeNumber.textContent = this._handleAddLike(this._id);
-      this._addLike();
+      this._handleAddLike(this._id)
+      .then((item) => {//сначала получаем значение лайка, потом в версткуб иначе undefined
+        this._likeNumber.textContent = item.likes.length;
+        this._likes = item.likes;
+        this._addLike();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     } else {
-      console.log('из КАРД убрать лайк',this._handleAddLike(this._id))
-      this._likeNumber.textContent = this._handleDeleteLike(this._id);
-      this._deleteLike();
+      this._handleDeleteLike(this._id)
+      .then((item) => {
+        this._likeNumber.textContent = item.likes.length;
+        this._likes = item.likes;
+        this._deleteLike();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     }
   }
 }

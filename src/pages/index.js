@@ -231,14 +231,14 @@ popupPreview.setEventListeners();
 //   }, confirmDeleteForm)
 
 function handleAddLike (id) {
-    api.addLike(id)
+    return api.addLike(id)
     // .then((item) => {
     //   number.textContent = item.likes.length;
     //   return item;
     // })
     .then((item) => {
-      console.log('handleAddLike', item.likes.length, item )
-      return item.likes.length;
+      // console.log('handleAddLike')
+      return item;
     })
     .catch((err) => {
       console.log(err);
@@ -246,13 +246,14 @@ function handleAddLike (id) {
 }
 
 function handleDeleteLike (id) {
-    api.deleteLike(id)
+    return api.deleteLike(id)
     // .then((item) => {
     //   number.textContent = item.likes.length;
     //   return item;
     // })
     .then((item) => {
-      return item.likes.length;
+      // console.log('handleDeleteLike')
+      return item;
     })
     .catch((err) => {
       console.log(err);
