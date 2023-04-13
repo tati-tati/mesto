@@ -22,7 +22,7 @@ class Card {
   }
 
   removeCard() {
-    this._handleCardDelete(this._id, this._element);
+    this._handleCardDelete(this._id, this);
   }
 
   createCard() {
@@ -93,5 +93,8 @@ class Card {
     this._cardIsLiked = status;
   }
 
+  deleteCard() {
+    this._element.remove();
+  }
 }
 export default Card;
