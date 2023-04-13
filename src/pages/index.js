@@ -92,25 +92,33 @@ function makeCardFromClass(item, id) {
  }
 
  const popupConfirmDelete = new PopupWithConfirmation(popupConfirmSel,
-  (id) => {
+  (id, element, button) => {
+    const initialButtonText = button.textContent;
+    button.textContent = "Удаление..."
     api.deleteCard(id)
     .then(() => {
       popupConfirmDelete.closePopup();
+      element.remove();
       // alert('success', data.message)
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
-    });
-  }, confirmDeleteForm)
+    })
+    .finally(() => {
+      button.textContent = initialButtonText;
+    })
+  }, confirmDeleteForm);
+
+  popupConfirmDelete.setEventListeners();
 
  function handleCardDelete(id, element) {
     popupConfirmDelete.openPopup(id ,element);
-    popupConfirmDelete.setEventListeners();
 }
 
 // POPUP ADD
-function handleCardSubmit(item) {
-  // buttonSaveInPopupAdd.textContent = 'Создание...';
+function handleCardSubmit(item, button) {
+  const initialButtonText = button.textContent;
+  button.textContent = 'Сохранение...';
   api.addNewCard(item)
   .then((res) => {
     // console.log(res)
@@ -120,9 +128,9 @@ function handleCardSubmit(item) {
   .catch((err) => {
     console.log(err); // выведем ошибку в консоль
   })
-  // .finally(() => {
-  //   buttonSaveInPopupAdd.textContent = "Создать"
-  // })
+  .finally(() => {
+    button.textContent = initialButtonText;
+  })
 }
 
 const addPostPopup = new PopupWithForm (
@@ -143,11 +151,13 @@ buttonOpenPopupAdd.addEventListener('click', handleAddPopup);
 // POPUP EDIT
 const editProfilePopup = new PopupWithForm(
   popupEditProfile,
-  (collectedData) => {
-    // buttonSaveInPopupEdit.textContent = 'Сохранение...';
+  (collectedData, button) => {
+    const initialButtonText = button.textContent;
+    button.textContent = 'Сохранение...';
     api.patchUserInfo(collectedData)
     .then ((collectedData) => {
       userData.setUserInfo(collectedData);
+
     })
     .then (() => {
       editProfilePopup.closePopup();
@@ -155,9 +165,9 @@ const editProfilePopup = new PopupWithForm(
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
-    // .finally (() => {
-    //   buttonSaveInPopupEdit.textContent = 'Сохранить';
-    // })
+    .finally (() => {
+      button.textContent = initialButtonText;
+    })
   });
 
 editProfilePopup.setEventListeners();
@@ -175,8 +185,9 @@ buttonOpenPopupEdit.addEventListener('click', handleEditPopup);
 
 // POPUP EDIT AVATAR
 const popupAvatarEdit = new PopupWithForm(popupEditAvatarSel,
-  (item) => {
-    // buttonSaveAvatar.textContent = 'Сохранение...';
+  (item, button) => {
+    const initialButtonText = button.textContent;
+    button.textContent = 'Сохранение...';
     api.patchUserAvatar(item)
     .then((item) => {
       userData.setUserInfo(item);
@@ -187,9 +198,9 @@ const popupAvatarEdit = new PopupWithForm(popupEditAvatarSel,
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
-    // .finally(() => {
-    //   buttonSaveAvatar.textContent = 'Сохранить'
-    // })
+    .finally(() => {
+      button.textContent = initialButtonText;
+    })
   });
 
 function handleAvatarEditPopup() {
@@ -236,6 +247,7 @@ function handleAddLike (id, status, card) {
     .then((res) => {
      card.changeLikeCounter(res.likes.length)
      card.addLike();
+     card.setStatus(!status);
     })
     .catch((err) => {
       console.log(err);
@@ -245,6 +257,7 @@ function handleAddLike (id, status, card) {
     .then((res) => {
       card.changeLikeCounter(res.likes.length)
       card.deleteLike();
+      card.setStatus(!status);
     })
     .catch((err) => {
       console.log(err);

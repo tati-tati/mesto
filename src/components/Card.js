@@ -83,11 +83,14 @@ class Card {
 
   _likeCard() {
     this._handleAddLike(this._id, this._cardIsLiked, this);
-    this._cardIsLiked = !this._cardIsLiked;
   }
 
   changeLikeCounter(count) {
     this._likeNumber.textContent = count;
+  }
+
+  setStatus(status) {
+    this._cardIsLiked = status;
   }
 
 }
